@@ -1,0 +1,23 @@
+/* https://developer.chrome.com/extensions/manifest */
+{
+  "manifest_version": 2
+
+  ,"name": "VK news filter"
+  ,"description": "This extension shows filtered VK news."
+  ,"version": "0.1"
+  ,"author": "Alex Sudakov <cygakoB@gmail.com>"
+
+  ,"content_scripts": [
+    {
+      "matches": [
+        "http://vk.com/*"
+        ,"https://vk.com/*"
+      ]
+      ,"js": [
+        "js/jquery.js"
+        ,"js/filter.js"
+      ]
+      ,"run_at": "document_end"
+    }
+  ]
+}
