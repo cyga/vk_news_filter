@@ -10,6 +10,10 @@
   ,"content_scripts": [
     {
       "matches": [
+        /* we can't use /feed in url here
+           because if we landed on another page,
+           we want be initialized on change to feed
+        */
         "http://vk.com/*"
         ,"https://vk.com/*"
       ]
