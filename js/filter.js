@@ -1,25 +1,3 @@
-/* Google chrome extension
- * for vk.com social network
- * it allows to filter vk news - _NO_ reposts/groups
- * author: "alex sudakov <cygakoB@gmail.com>"
- *
- * TODO
- *   events handling
- *     on keypress (configured for unhandled case, add in config in future)
- *     on more posts upload
- *     on switch to news
- *   function post_type
- *     handle/parse more types (any repost is parsed now)
- *   function is_post_shown
- *     create config for extension 
- *     gets config for extension 
- *   add config for extension to analyze what to show
- *     reposts - yes/no/filter
- *       may be white/black list and default behavior
- *     groups - yes/no/filter
- *       may be white/black list and default behavior
-*/
-
 (function (document) {
     "use strict";
 
@@ -56,7 +34,7 @@
 
             return POST_STANDARD;
         }
-        ,is_post_removed= function(idx, el, type) {
+        ,is_post_hidden = function(idx, el, type) {
             if(null === type || undefined === type)
                 type = post_type(idx, el);
 
@@ -71,12 +49,21 @@
             return false;
         }
         ,filter         = function() {
-            // div class="feed_row"
+            /* go through all elements and show/hide (can be on options change) */
             jQuery('div.feed_row').each(function(idx, el) {
-                var type    = post_type(idx, el);
-                if(is_post_removed(idx, el, type)) {
-                    debug("remove element: ", el);
-                    el.remove();
+                var el_jq   = jQuery(el);
+                var type    = post_type(idx, el_jq);
+                if(is_post_hidden(idx, el_jq, type)) {
+                    if(el_jq.is(':visible')) {
+                        debug("hide element: ", el_jq);
+                        el_jq.hide();
+                    }
+                }
+                else {
+                    if(el_jq.is(':hidden')) {
+                        debug("show element: ", el_jq);
+                        el_jq.show();
+                    }
                 }
             });
         }
