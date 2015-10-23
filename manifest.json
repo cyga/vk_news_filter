@@ -1,19 +1,20 @@
-/* https://developer.chrome.com/extensions/manifest */
 {
   "manifest_version": 2
 
-  ,"name": "VK news filter"
-  ,"description": "This extension shows filtered VK news."
+  ,"name": "Новости только от друзей ВКонтакте"
+  ,"description": "Это расширение позволяет фильтровать репосты и группы в новостях ВК (vk.com)"
+  ,"short_name": "Фильтр репостов и групп ВКонтакте"
   ,"version": "0.1"
-  ,"author": "Alex Sudakov <cygakoB@gmail.com>"
+  ,"author": "Александр Судаков <cygakoB@gmail.com>"
+  ,"icons": {
+    "16":   "icon-16.png"
+    ,"48":  "icon-48.png"
+    ,"128": "icon-128.png"
+  }
 
   ,"content_scripts": [
     {
       "matches": [
-        /* we can't use /feed in url here
-           because if we landed on another page,
-           we want be initialized on change to feed
-        */
         "http://vk.com/*"
         ,"https://vk.com/*"
       ]
