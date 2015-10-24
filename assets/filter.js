@@ -1,10 +1,37 @@
 (function (document) {
     "use strict";
 
-    // TODO DEBUG into config
-    var DEBUG           = true
+    var config_default  = {
+            "show_reposts":     false
+            ,"show_groups":     false
+            ,"debug_mode":      false
+        }
+        ,config         = config_default
+        ,config_on_change    = function(changes, area_name) {
+            debug("config on change event:", changes, area_name);
+            for(var key in changes) {
+                config[key] = changes[key].newValue;
+            }
+            debug('config changed', config);
+        }
+        ,config_init    = function() {
+            if(chrome.storage) {
+                chrome.storage.sync.get(
+                    config_default
+                    ,function(items) {
+                        for(var key in items) {
+                            config[key] = items[key];
+                        }
+                        debug('config initialized', config);
+                    }
+                );
+                chrome.storage.onChanged.addListener(config_on_change);
+            }
+        }
         ,debug          = function() {
-            if(DEBUG) console.log.apply(console, arguments);
+            // config can be initialized later than first call here
+            // possible problem: unshown first debug calls
+            if(config.debug_mode) console.log.apply(console, arguments);
         }
         ,POST_STANDARD  = 'post_std'
         ,POST_REPOST    = 'post_repost'
@@ -41,9 +68,9 @@
             // based on type only:
             switch(type) {
                 case POST_REPOST:
-                    return true;
+                    return !config.show_reposts;
                 case POST_GROUP:
-                    return true;
+                    return !config.show_groups;
             }
 
             return false;
@@ -69,6 +96,8 @@
         }
         ,TIMER_DELAY    = 1000
     ;
+
+    config_init();
 
     // filter feed on document load
     debug("initial filter call");
