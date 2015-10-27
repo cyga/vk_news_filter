@@ -7,40 +7,50 @@ function is_storage_ok() {
     return true;
 }
 
+function options_bool() {
+    return {
+        "show_reposts":     false
+        ,"show_groups":     false
+        ,"show_friends":    true
+        ,"debug_mode":      false
+    };
+}
+
 function save_options() {
     if(!is_storage_ok()) return;
  
-    var show_reposts = document.getElementById('show_reposts').checked;
-    var show_groups  = document.getElementById('show_groups').checked;
-    var debug_mode   = document.getElementById('debug_mode').checked;
-    chrome.storage.sync.set({
-        "show_reposts":     show_reposts
-        ,"show_groups":     show_groups
-        ,"debug_mode":      debug_mode
-    }, function() {
-        // update status to let user know options were saved.
-        var status = document.getElementById('status');
-        status.textContent = 'Настройки сохранены';
-        setTimeout(function() {
-            status.textContent = '';
-        }, 750);
-    });
+    var opts    = {};
+    for(var key in options_bool()) {
+        opts[key]   = document.getElementById(key).checked;
+    }
+    chrome.storage.sync.set(
+        opts
+        ,function() {
+            // update status to let user know options were saved.
+            var status = document.getElementById('status');
+            status.textContent = 'Настройки сохранены';
+            setTimeout(function() {
+                status.textContent = '';
+            }, 750);
+        }
+    );
 }
 
 function restore_options() {
     if(!is_storage_ok()) return;
 
-    chrome.storage.sync.get({
-        // use default values
-        "show_reposts":     false
-        ,"show_groups":     false
-        ,"debug_mode":      false
-    }, function(items) {
-        document.getElementById('show_reposts').checked     = items.show_reposts;
-        document.getElementById('show_groups').checked      = items.show_groups;
-        document.getElementById('debug_mode').checked       = items.debug_mode;
-    });
+    chrome.storage.sync.get(
+        options_bool()
+        ,function(items) {
+            var opts    = {};
+            for(var key in options_bool()) {
+                document.getElementById(key).checked    = items[key];
+            }
+        }
+    );
 }
 
 document.addEventListener('DOMContentLoaded', restore_options);
-document.getElementById('save').addEventListener('click', save_options);
+for(var key in options_bool()) {
+    document.getElementById(key).addEventListener('change', save_options);
+}

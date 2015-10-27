@@ -33,9 +33,9 @@
             // possible problem: unshown first debug calls
             if(config.debug_mode) console.log.apply(console, arguments);
         }
-        ,POST_STANDARD  = 'post_std'
         ,POST_REPOST    = 'post_repost'
         ,POST_GROUP     = 'post_group'
+        ,POST_FRIENDS   = 'post_friends'
         ,post_type      = function(idx, el) {
             var el_jq = jQuery(el);
             if(0 < el_jq.find('.published_by_wrap').length) {
@@ -59,7 +59,7 @@
                 return POST_GROUP;
             }
 
-            return POST_STANDARD;
+            return POST_FRIENDS;
         }
         ,is_post_hidden = function(idx, el, type) {
             if(null === type || undefined === type)
@@ -71,6 +71,8 @@
                     return !config.show_reposts;
                 case POST_GROUP:
                     return !config.show_groups;
+                case POST_FRIENDS:
+                    return !config.show_friends;
             }
 
             return false;
