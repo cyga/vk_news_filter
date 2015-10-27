@@ -1,7 +1,7 @@
 function is_storage_ok() {
     if(!chrome.storage) {
         console.log("no storage permission was given, can't save options");
-        alert("Нет разрешения на хранилище (передобавьте расширения с ним, для возможности настройки)");
+        alert("Нет разрешения на хранилище (передобавьте расширение с ним для возможности настройки)");
         return false;
     }
     return true;
