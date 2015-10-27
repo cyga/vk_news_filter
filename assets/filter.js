@@ -106,10 +106,14 @@
     debug("initial filter call");
     filter();
 
-    // TODO add filter() call on events (instead or repeatition on timer):
-    //   * on upload more news
-    //   * on switch to news
-    //   * on keypress (to force clearance in unhandled situation)
+    /* just re-check everything on repeat timer
+     * another possible implementation:
+     *   add filter() call on events:
+     *   * upload more news
+     *   * switch to news
+     *   * keypress (to force clearance in unhandled situation)
+     *   but it's too erroprone, working with timer now
+     */
     var timer_filter_id = setInterval(function() {
             debug("another filter call");
             filter();
