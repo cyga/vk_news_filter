@@ -4,7 +4,7 @@
   ,"name": "Новости друзей ВК (ВКонтакте, VK, vk.com)"
   ,"description": "Фильтр репостов и групп в новостях ВК (ВКонтакте, VK, vk.com)"
   ,"short_name": "Фильтр репостов и групп ВК"
-  ,"version": "0.3"
+  ,"version": "0.5"
   ,"author": "Александр Судаков <cygakoB@gmail.com>"
   ,"icons": {
     "16":   "assets/icon-16.png"

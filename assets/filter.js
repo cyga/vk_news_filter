@@ -4,6 +4,7 @@
     var config_default  = {
             "show_reposts":     false
             ,"show_groups":     false
+            ,"show_friends":    true
             ,"debug_mode":      false
         }
         ,config         = config_default
