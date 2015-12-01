@@ -16,12 +16,21 @@ function options_bool() {
     };
 }
 
+function options_text() {
+    return {
+        "hide_re":          ''
+    };
+}
+
 function save_options() {
     if(!is_storage_ok()) return;
  
     var opts    = {};
     for(var key in options_bool()) {
         opts[key]   = document.getElementById(key).checked;
+    }
+    for(var key in options_text()) {
+        opts[key]   = document.getElementById(key).value;
     }
     chrome.storage.sync.set(
         opts
@@ -48,9 +57,23 @@ function restore_options() {
             }
         }
     );
+
+    chrome.storage.sync.get(
+        options_text()
+        ,function(items) {
+            var opts    = {};
+            for(var key in options_text()) {
+                document.getElementById(key).value    = items[key];
+            }
+        }
+    );
 }
 
 document.addEventListener('DOMContentLoaded', restore_options);
 for(var key in options_bool()) {
     document.getElementById(key).addEventListener('change', save_options);
+}
+for(var key in options_text()) {
+    document.getElementById(key).addEventListener('change', save_options);
+    document.getElementById(key).addEventListener('keydown', save_options);
 }

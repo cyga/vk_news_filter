@@ -5,6 +5,7 @@
             "show_reposts":     false
             ,"show_groups":     false
             ,"show_friends":    true
+            ,"hide_re":         ''
             ,"debug_mode":      false
         }
         ,config         = config_default
@@ -34,13 +35,32 @@
             // possible problem: unshown first debug calls
             if(config.debug_mode) console.log.apply(console, arguments);
         }
+        ,error          = function() {
+            // config can be initialized later than first call here
+            // possible problem: unshown first debug calls
+            if(config.debug_mode) console.log.apply(console, ["[ERROR]"].concat(arguments));
+        }
         ,POST_REPOST    = 'post_repost'
         ,POST_GROUP     = 'post_group'
         ,POST_FRIENDS   = 'post_friends'
+        ,HIDE_RE        = 'hide_re'
         ,post_type      = function(idx, el) {
             var el_jq = jQuery(el);
             if(0 < el_jq.find('.published_by_wrap').length) {
                  return POST_REPOST;
+            }
+
+            if(config.hide_re.length) {
+                var suits   = false;
+                try {
+                    var re  = new RegExp( config.hide_re );
+                    suits   = el_jq.text().match(re);
+                }
+                catch(e) {
+                    error("can't check hide_re:", e);
+                }
+
+                if(suits) return HIDE_RE;
             }
 
             var author_el       = el_jq.find('a.author').first();
@@ -68,6 +88,8 @@
 
             // based on type only:
             switch(type) {
+                case HIDE_RE:
+                    return true;
                 case POST_REPOST:
                     return !config.show_reposts;
                 case POST_GROUP:
