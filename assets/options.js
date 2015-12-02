@@ -1,79 +1,178 @@
-function is_storage_ok() {
-    if(!chrome.storage) {
-        console.log("no storage permission was given, can't save options");
-        alert("Нет разрешения на хранилище (передобавьте расширение с ним для возможности настройки)");
-        return false;
-    }
-    return true;
-}
+(function (document) {
+    "use strict";
 
-function options_bool() {
-    return {
-        "show_reposts":     false
-        ,"show_groups":     false
-        ,"show_friends":    true
-        ,"debug_mode":      false
-    };
-}
-
-function options_text() {
-    return {
-        "hide_re":          ''
-    };
-}
-
-function save_options() {
-    if(!is_storage_ok()) return;
- 
-    var opts    = {};
+    // UI
     for(var key in options_bool()) {
-        opts[key]   = document.getElementById(key).checked;
+        jQuery('#'+key).change(save_options);
+    }
+    function init_text(sel) {
+        jQuery(sel).change(save_options);
+        jQuery(sel).keyup(save_options);
     }
     for(var key in options_text()) {
-        opts[key]   = document.getElementById(key).value;
+        init_text('#'+key);
     }
-    chrome.storage.sync.set(
-        opts
-        ,function() {
-            // update status to let user know options were saved.
-            var status = document.getElementById('status');
-            status.textContent = 'Настройки сохранены';
-            setTimeout(function() {
-                status.textContent = '';
-            }, 750);
+
+    function init_hide_re_remove() {
+        jQuery('.glyphicon-remove').click(function() {
+            jQuery(this).parents('div').first().remove();
+            save_options();
+        });
+    }
+    init_hide_re_remove();
+
+    function hide_re_add(val) {
+        if(undefined === val || null === val)
+            val = '';
+        jQuery('<div> <span class="glyphicon glyphicon-remove" aria-hidden="true"></span><input class="hide_re" type="text" value="'+val+'"></div>')
+            .insertBefore( jQuery('#hide_re_add_div') );
+        init_hide_re_remove();
+        init_text('.hide_re');
+    }
+    jQuery('#hide_re_add_div').click(function() {
+        hide_re_add();
+    });
+
+    // save/restore
+    var opts    = {};
+
+    function is_storage_ok() {
+        if(!chrome.storage) {
+            console.log("no storage permission was given, can't save options");
+            alert("Нет разрешения на хранилище (передобавьте расширение с ним для возможности настройки)");
+            return false;
         }
-    );
-}
+        return true;
+    }
 
-function restore_options() {
-    if(!is_storage_ok()) return;
+    function options_bool() {
+        return {
+            "show_reposts":     false
+            ,"show_groups":     false
+            ,"show_friends":    true
+            ,"debug_mode":      false
+        };
+    }
 
-    chrome.storage.sync.get(
-        options_bool()
-        ,function(items) {
-            var opts    = {};
-            for(var key in options_bool()) {
-                document.getElementById(key).checked    = items[key];
+    function options_text() {
+        return {
+        };
+    }
+
+    function options_text_groups() {
+        return {
+            "hide_re":          []
+        };
+    }
+    var options_text_groups_add = {
+        "hide_re":      hide_re_add
+    };
+
+    function save_options() {
+        if(!is_storage_ok()) return;
+    
+        var changed = false;
+        for(var key in options_bool()) {
+            if(opts[key] != jQuery('#'+key).prop('checked')) {
+                opts[key]   = jQuery('#'+key).prop('checked');
+                changed     = true;
             }
         }
-    );
 
-    chrome.storage.sync.get(
-        options_text()
-        ,function(items) {
-            var opts    = {};
-            for(var key in options_text()) {
-                document.getElementById(key).value    = items[key];
+        for(var key in options_text()) {
+            if(opts[key] != jQuery('#'+key).val()) {
+                opts[key]   = jQuery('#'+key).val();
+                changed     = true;
             }
         }
-    );
-}
 
-document.addEventListener('DOMContentLoaded', restore_options);
-for(var key in options_bool()) {
-    document.getElementById(key).addEventListener('change', save_options);
-}
-for(var key in options_text()) {
-    document.getElementById(key).addEventListener('change', save_options);
-    document.getElementById(key).addEventListener('keydown', save_options);
-}
+        for(var key in options_text_groups()) {
+            var vals    = [];
+            jQuery('.'+key).each(function(idx, el){
+                vals.push(jQuery(el).val());
+            });
+
+            if(!jQuery.isArray(opts[key])) {
+                changed = true;
+            }
+            else if(opts[key].length != vals.length) {
+                changed = true;
+            }
+            else {
+                for(var i=0; i<vals.length; i++) {
+                    if(opts[key][i] != vals[i]) {
+                        changed         = true;
+                    }
+                }
+            }
+
+            opts[key]   = vals;
+        }
+
+        if(changed) {
+            chrome.storage.sync.set(
+                opts
+                ,function() {
+                    // update status to let user know options were saved
+                    var status_el = jQuery('#status');
+                    status_el.text('Настройки сохранены');
+                    setTimeout(function() {
+                        status_el.text('');
+                    }, 750);
+                }
+            );
+        }
+    }
+
+    function restore_options() {
+        if(!is_storage_ok()) return;
+
+        chrome.storage.sync.get(
+            options_bool()
+            ,function(items) {
+                for(var key in options_bool()) {
+                    jQuery('#'+key).prop('checked', opts[key] = items[key]);
+                }
+            }
+        );
+
+        chrome.storage.sync.get(
+            options_text()
+            ,function(items) {
+                for(var key in options_text()) {
+                    jQuery('#'+key).val( opts[key] = items[key] );
+                }
+            }
+        );
+
+        chrome.storage.sync.get(
+            options_text_groups()
+            ,function(items) {
+                for(var key in options_text_groups()) {
+                    var tmp = items[key];
+                    if(jQuery.isArray(tmp)) {
+                        opts[key]   = tmp;
+                    }
+                    else if(
+                        undefined !== tmp
+                        &&
+                        null !== tmp
+                        &&
+                        '' !== tmp
+                    ) {
+                        opts[key]   = [tmp];
+                    }
+                    else {
+                        opts[key]   = [];
+                    }
+
+                    for(var i=0; i<opts[key].length; i++) {
+                        options_text_groups_add[key]( opts[key][i] );
+                    }
+                }
+            }
+        );
+    }
+
+    restore_options();
+}(document));

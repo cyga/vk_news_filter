@@ -1,39 +1,72 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Настройки ДК</title>
-</head>
 
-<body>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
-<table>
-    <tbody>
-        <tr>
-            <td><label for="show_reposts">Показывать репосты</label></td>
-            <td><input type="checkbox" id="show_reposts"></td>
-        </tr>
-        <tr>
-            <td><label for="show_groups">Показывать группы</label></td>
-            <td><input type="checkbox" id="show_groups"></td>
-        </tr>
-        <tr>
-            <td><label for="show_friends">Показывать новости друзей</label></td>
-            <td><input type="checkbox" id="show_friends"></td>
-        </tr>
-        <tr>
-            <td><label for="hide_re">Фильтровать по выражению (текст или <a href="http://javascript.ru/basic/regular-expression+">регулярные выражения JavaScript</a>)</label></td>
-            <td><input type="text" id="hide_re"></td>
-        </tr>
-        <tr>
-            <td><label for="debug_mode">Режим разработки</label></td>
-            <td><input type="checkbox" id="debug_mode"></td>
-        </tr>
-    </tbody>
-</table>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="col-sm-4" for="show_reposts">Показывать репосты</label>
+          <div class="col-sm-8">
+            <input type="checkbox" id="show_reposts">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-4" for="show_groups">Показывать группы</label>
+          <div class="col-sm-8">
+            <input type="checkbox" id="show_groups">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-4" for="show_friends">Показывать новости друзей</label>
+          <div class="col-sm-8">
+            <input type="checkbox" id="show_friends">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-4" for="hide_re_div">Фильтровать по выражению (текст или <a href="http://javascript.ru/basic/regular-expression+">регулярное выражение JavaScript</a>)</label>
+          <div class="col-sm-8" id="hide_re_div">
+            <div id="hide_re_add_div">
+              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> добавить ещё одно выражение
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-4" for="debug_mode">Режим разработки</label>
+          <div class="col-sm-8">
+            <input type="checkbox" id="debug_mode">
+          </div>
+        </div>
+      </form>
 
-<div id="status"></div>
+      <div class="col-sm-12">
+        <div class="col-sm-4">
+        </div>
+        <div class="col-sm-8" id="status">
+        </div>
+      </div>
+    </div>
 
-<script src="options.js"></script>
-</body>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="options.js"></script>
+  </body>
 </html>
+<html>

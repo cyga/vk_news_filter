@@ -5,7 +5,7 @@
             "show_reposts":     false
             ,"show_groups":     false
             ,"show_friends":    true
-            ,"hide_re":         ''
+            ,"hide_re":         []
             ,"debug_mode":      false
         }
         ,config         = config_default
@@ -52,17 +52,35 @@
                  return POST_REPOST;
             }
 
-            if(config.hide_re.length) {
-                var suits   = false;
-                try {
-                    var re  = new RegExp( config.hide_re );
-                    suits   = el_jq.text().match(re);
+            if(config.hide_re) {
+                var hide_re  = [];
+                if(jQuery.isArray(config.hide_re)) {
+                    hide_re  = config.hide_re;
                 }
-                catch(e) {
-                    error("can't check hide_re:", e);
+                else if(
+                    undefined !== config.hide_re
+                    &&
+                    null !== config.hide_re
+                    &&
+                    '' !== config.hide_re
+                ) {
+                    hide_re  = [config.hide_re];
                 }
+                else {
+                    hide_re  = [];
+                }
+                for(var i=0; i<hide_re.length; i++) {
+                    var suits   = false;
+                    try {
+                        var re  = new RegExp( hide_re[i], "i" );
+                        suits   = el_jq.text().match(re);
+                    }
+                    catch(e) {
+                        error("can't check "+i+"th hide_re:", e);
+                    }
 
-                if(suits) return HIDE_RE;
+                    if(suits) return HIDE_RE;
+                }
             }
 
             var author_el       = el_jq.find('a.author').first();
