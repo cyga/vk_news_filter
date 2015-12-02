@@ -30,6 +30,8 @@
                 chrome.storage.onChanged.addListener(config_on_change);
             }
         }
+        ,getTime        = function() { return (new Date()).getTime() }
+        ,time_filter    = null
         ,debug          = function() {
             // config can be initialized later than first call here
             // possible problem: unshown first debug calls
@@ -118,8 +120,12 @@
                     }
                 }
             });
+
+            time_filter = getTime();
+            debug("time filter "+time_filter);
         }
-        ,TIMER_DELAY    = 1000
+        ,TIMER_DELAY                = 1000
+        ,TIMER_DELAY_WAIT_FACTOR    = 0.333
     ;
 
     config_init();
@@ -138,7 +144,15 @@
      */
     var timer_filter_id = setInterval(function() {
             debug("another filter call");
-            filter();
+            var past    = getTime() - time_filter;
+            var delay   = TIMER_DELAY * TIMER_DELAY_WAIT_FACTOR;
+            if(past > delay) {
+                debug("past "+past+" since last filter, it's more than supposed delay "+delay+" => filter");
+                filter();
+            }
+            else {
+                debug("past "+past+" since last filter, it's less than supposed delay "+delay+" => skip filter");
+            }
         }
         ,TIMER_DELAY
     );
