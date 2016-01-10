@@ -121,23 +121,39 @@
             return false;
         }
         ,filter         = function() {
-            /* go through all elements and show/hide (can be on options change) */
-            jQuery('div.feed_row').each(function(idx, el) {
-                var el_jq   = jQuery(el);
-                var type    = post_type(idx, el_jq);
-                if(is_post_hidden(idx, el_jq, type)) {
-                    if(el_jq.is(':visible')) {
-                        debug("hide element: ", el_jq);
-                        el_jq.hide();
-                    }
+            /* filter only on feed page, not notifications */
+            var filter  = false;
+            if(!window.location.href.match("/feed")) {
+                filter  = false;
+            }
+            else {
+                if(window.location.href.match("section=notifications")) {
+                    filter  = false;
                 }
                 else {
-                    if(el_jq.is(':hidden')) {
-                        debug("show element: ", el_jq);
-                        el_jq.show();
-                    }
+                    filter  = true;
                 }
-            });
+            }
+
+            if(filter) {
+                /* go through all elements and show/hide (can be on options change) */
+                jQuery('div.feed_row').each(function(idx, el) {
+                    var el_jq   = jQuery(el);
+                    var type    = post_type(idx, el_jq);
+                    if(is_post_hidden(idx, el_jq, type)) {
+                        if(el_jq.is(':visible')) {
+                            debug("hide element: ", el_jq);
+                            el_jq.hide();
+                        }
+                    }
+                    else {
+                        if(el_jq.is(':hidden')) {
+                            debug("show element: ", el_jq);
+                            el_jq.show();
+                        }
+                    }
+                });
+            }
 
             time_filter = getTime();
             debug("time filter "+time_filter);
