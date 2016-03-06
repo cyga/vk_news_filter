@@ -49,6 +49,7 @@
         return {
             "show_reposts":     false
             ,"show_groups":     false
+            ,"show_ig":         true
             ,"show_friends":    true
             ,"debug_mode":      false
         };

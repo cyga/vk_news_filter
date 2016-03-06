@@ -4,6 +4,7 @@
     var config_default  = {
             "show_reposts":     false
             ,"show_groups":     false
+            ,"show_ig":         true
             ,"show_friends":    true
             ,"hide_re":         []
             ,"debug_mode":      false
@@ -44,6 +45,7 @@
         }
         ,POST_REPOST    = 'post_repost'
         ,POST_GROUP     = 'post_group'
+        ,POST_IG        = 'post_ig'
         ,POST_FRIENDS   = 'post_friends'
         ,HIDE_RE        = 'hide_re'
         ,post_type      = function(idx, el) {
@@ -94,10 +96,25 @@
             }
 
             // one more way based on negative group's id
-            var post_el         = el_jq.find('div.post').first();
+            var post_el         = (el_jq.find('div.post').first())[0];
             var post_id         = post_el ? jQuery(post_el).attr('id') : null;
             if(null != post_id && post_id.match(/\-\d/)) {
                 return POST_GROUP;
+            }
+
+            // one more way based on negative group's id
+            if(
+                el_jq.find('a').toArray()
+                // check if we have element, that hasClass for instagram
+                .reduce(
+                    function(prev, curr) {
+                        return prev ? prev
+                            : jQuery(curr).hasClass("wall_post_source_instagram") ? true : false
+                    }
+                    ,false
+                )
+            ) {
+                return POST_IG;
             }
 
             return POST_FRIENDS;
@@ -114,6 +131,8 @@
                     return !config.show_reposts;
                 case POST_GROUP:
                     return !config.show_groups;
+                case POST_IG:
+                    return !config.show_ig;
                 case POST_FRIENDS:
                     return !config.show_friends;
             }
