@@ -6,6 +6,7 @@
             ,"show_groups":     false
             ,"show_ig":         true
             ,"show_friends":    true
+            ,"show_adv":        false
             ,"hide_re":         []
             ,"debug_mode":      false
         }
@@ -47,6 +48,7 @@
         ,POST_GROUP     = 'post_group'
         ,POST_IG        = 'post_ig'
         ,POST_FRIENDS   = 'post_friends'
+        ,POST_ADV       = 'post_adv'
         ,HIDE_RE        = 'hide_re'
         ,post_type      = function(idx, el) {
             var el_jq = jQuery(el);
@@ -117,6 +119,22 @@
                 return POST_IG;
             }
 
+            /* <span class="explain"><span class="wall_text_name_explain_promoted_post" onmouseover="showTooltip(this, {text: &quot;<div class=\&quot;content\&quot;><span class=\&quot;header\&quot;>Рекламная запись<\/span><br>Эта запись добавлена в новостную ленту на основе Ваших интересов и информации из профиля.<\/div>&quot;, slide: 15, shift: [50, 0, 0], showdt: 400, hidedt: 200, className: 'wall_tt promoted_post_tt', hasover: true});">Рекламная запись</span></span>
+             */
+            if(
+                el_jq.find('span').toArray()
+                // check if we have element, that hasClass for instagram
+                .reduce(
+                    function(prev, curr) {
+                        return prev ? prev
+                            : jQuery(curr).hasClass("wall_text_name_explain_promoted_post") ? true : false
+                    }
+                    ,false
+                )
+            ) {
+                return POST_ADV;
+            }
+
             return POST_FRIENDS;
         }
         ,is_post_hidden = function(idx, el, type) {
@@ -135,6 +153,8 @@
                     return !config.show_ig;
                 case POST_FRIENDS:
                     return !config.show_friends;
+                case POST_ADV:
+                    return !config.show_adv;
             }
 
             return false;

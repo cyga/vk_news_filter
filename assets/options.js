@@ -51,6 +51,7 @@
             ,"show_groups":     false
             ,"show_ig":         true
             ,"show_friends":    true
+            ,"show_adv":        false
             ,"debug_mode":      false
         };
     }
