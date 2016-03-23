@@ -4,7 +4,7 @@
   ,"name": "Фильтр новостей ВК (ВКонтакте, VK, vk.com)"
   ,"description": "Фильтр новостей ВК (ВКонтакте, VK, vk.com)"
   ,"short_name": "Фильтр новостей ВК, ака ДрузьяКонтакт!"
-  ,"version": "0.59"
+  ,"version": "0.61"
   ,"author": "Александр Судаков <cygakoB@gmail.com>"
   ,"icons": {
     "16":   "assets/icons/icon-16.png"
