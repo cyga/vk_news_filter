@@ -7,6 +7,7 @@
             ,"show_ig":         true
             ,"show_friends":    true
             ,"show_adv":        false
+            ,"show_adv_left":   false
             ,"hide_re":         []
             ,"debug_mode":      false
         }
@@ -192,6 +193,12 @@
                         }
                     }
                 });
+            }
+
+            // hide left adv block no matter on the page
+            if(!config.show_adv_left) {
+                debug("hide left adv block");
+                jQuery('#ads_left').hide();
             }
 
             time_filter = getTime();
