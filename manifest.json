@@ -19,6 +19,8 @@
       "matches": [
         "http://vk.com/*"
         ,"https://vk.com/*"
+        ,"http://new.vk.com/*"
+        ,"https://new.vk.com/*"
       ]
       ,"js": [
         "assets/js/jquery.min.js"
