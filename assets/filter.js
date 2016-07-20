@@ -53,8 +53,12 @@
         ,HIDE_RE        = 'hide_re'
         ,post_type      = function(idx, el) {
             var el_jq = jQuery(el);
-            if(0 < el_jq.find('.published_by_wrap').length) {
-                 return POST_REPOST;
+            if(
+                0 < el_jq.find('.published_by_wrap').length
+                ||
+                0 < el_jq.find('div[id^=feed_repost]').length
+            ) {
+                return POST_REPOST;
             }
 
             if(config.hide_re) {
