@@ -124,7 +124,33 @@
                 return POST_IG;
             }
 
-            /* <span class="explain"><span class="wall_text_name_explain_promoted_post" onmouseover="showTooltip(this, {text: &quot;<div class=\&quot;content\&quot;><span class=\&quot;header\&quot;>Рекламная запись<\/span><br>Эта запись добавлена в новостную ленту на основе Ваших интересов и информации из профиля.<\/div>&quot;, slide: 15, shift: [50, 0, 0], showdt: 400, hidedt: 200, className: 'wall_tt promoted_post_tt', hasover: true});">Рекламная запись</span></span>
+            /*
+				1. example:
+				<span class="explain"><span class="wall_text_name_explain_promoted_post" onmouseover="showTooltip(this, {text: &quot;<div class=\&quot;content\&quot;><span class=\&quot;header\&quot;>Рекламная запись<\/span><br>Эта запись добавлена в новостную ленту на основе Ваших интересов и информации из профиля.<\/div>&quot;, slide: 15, shift: [50, 0, 0], showdt: 400, hidedt: 200, className: 'wall_tt promoted_post_tt', hasover: true});">Рекламная запись</span></span>
+
+				2. restricted:
+				<div class="post_header">
+					<a class="post_image" href="/nskroof">
+						<img src="https://pp.vk.me/c630318/v630318525/46754/fkzbB57sPHA.jpg" data-post-id="-72326894_3846" width="50" height="50" class="post_img">
+						<span class="blind_label">.</span>
+					</a>
+					<div class="post_header_info">
+						<h5 class="post_author"><a class="author" href="/nskroof" data-from-id="-72326894" data-post-id="-72326894_3846">Свидание на крыше | Новосибирск</a> <span class="explain"><span class="wall_fixed_label">&nbsp;запись закреплена</span></span></h5>
+						<div class="post_date"><a class="wall_text_name_explain_promoted_post post_link" href="/wall-72326894_3846" onclick="return showWiki({w: 'wall-72326894_3846'}, false, event);">Рекламная запись</a><span class="wall_text_name_explain_promoted_post_age_restriction">18+</span></div>
+						<div class="ui_actions_menu_wrap _ui_menu_wrap " onmouseover="uiActionsMenu.show(this);" onmouseout="uiActionsMenu.hide(this);">
+							<div class="ui_actions_menu_icons" tabindex="0" aria-label="Действия" role="button" onclick="uiActionsMenu.keyToggle(this, event);"><span class="blind_label">Действия</span></div>
+							<div class="ui_actions_menu _ui_menu"><a class="ui_actions_menu_item" onclick="feed.ignoreItem('-72326894_3846', 'wall_-72326894_3846', '0704d6aa265bcd1891');" tabindex="0" role="link">Это не интересно</a></div>
+						</div>
+					</div>
+				</div>
+             */
+            if(
+                el_jq.find('[class*=promoted_post]').length
+            ) {
+                return POST_ADV;
+            }
+
+            /*
              */
             if(
                 el_jq.find('span').toArray()
