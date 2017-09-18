@@ -234,10 +234,14 @@
 
             // hide posts which has likes less then config.filter_likes no matter on news feed or group page
             if(config.likes_filter > 0) {
+                var clickOnLike = false;
+                jQuery('a.post_like').on('click', function(){
+                    clickOnLike = true;
+                });
                 jQuery('.post_like_count').each(function() {
                     var likes = parseInt(this.innerText.replace(/ /g, ''));
-                    if (likes <= config.likes_filter) {
-                        jQuery(this).parents('div._post').hide();                        
+                    if (likes <= config.likes_filter || !this.innerText && !clickOnLike) {
+                        jQuery(this).parents('div._post').hide();
                     }
                 });
             }
