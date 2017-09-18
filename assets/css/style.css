@@ -1,6 +1,24 @@
 body {
-    padding: 50px;
-    background-color: rgb(201, 201, 201);
+    padding: 40px;
+    padding-top: 0;
+    padding-right: 30px;
+    background-color: rgb(236, 233, 228);
+}
+
+h1 {
+    font-size: 20px;
+    line-height: 48px;
+    text-align: center;
+}
+
+label {
+    font-weight: normal;
+    transition: 0.3s;
+}
+
+label:hover {
+    font-weight: bold;
+    transition: 0.3s;
 }
 
 .container {
@@ -9,9 +27,13 @@ body {
 }
 
 .form-horizontal {
-    width: 600px;
+    width: 650px;
 }
 
 .form-group {
     width: 600px;
+}
+
+input[type=number] {
+    width: 100px;
 }
