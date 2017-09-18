@@ -23,67 +23,67 @@
       <h1>Фильтр новостей vk.com v0.67</h1>
       <form class="form-horizontal">
         <div class="form-group">
-          <label class="col-sm-8" for="show_reposts">Показывать репосты</label>
-          <div class="col-sm-4">
+          <div class="option">
             <input type="checkbox" id="show_reposts">
           </div>
+          <label class="label" for="show_reposts">Показывать репосты</label>
         </div>
         <div class="form-group">
-          <label class="col-sm-8" for="show_groups">Показывать группы</label>
-          <div class="col-sm-4">
+          <div class="option">
             <input type="checkbox" id="show_groups">
           </div>
+          <label class="label" for="show_groups">Показывать группы</label>
         </div>
         <div class="form-group">
-          <label class="col-sm-8" for="show_ig">Показывать InstaGram</label>
-          <div class="col-sm-4">
+          <div class="option">
             <input type="checkbox" id="show_ig">
           </div>
+          <label class="label" for="show_ig">Показывать InstaGram</label>
         </div>
         <div class="form-group">
-          <label class="col-sm-8" for="show_friends">Показывать новости друзей</label>
-          <div class="col-sm-4">
+          <div class="option">
             <input type="checkbox" id="show_friends">
           </div>
+          <label class="label" for="show_friends">Показывать новости друзей</label>
         </div>
         <div class="form-group">
-          <label class="col-sm-8" for="show_adv">Показывать рекламу в ленте</label>
-          <div class="col-sm-4">
+          <div class="option">
             <input type="checkbox" id="show_adv">
           </div>
+          <label class="label" for="show_adv">Показывать рекламу в ленте</label>
         </div>
         <div class="form-group">
-          <label class="col-sm-8" for="show_adv_left">Показывать рекламу слева</label>
-          <div class="col-sm-4">
+          <div class="option">
             <input type="checkbox" id="show_adv_left">
           </div>
+          <label class="label" for="show_adv_left">Показывать рекламу слева</label>
         </div>
         <div class="form-group">
-          <label class="col-sm-8" for="hide_re_div">Фильтровать по выражению (текст или <a href="http://javascript.ru/basic/regular-expression+">регулярное выражение JavaScript</a>)</label>
-          <div class="col-sm-4" id="hide_re_div">
-            <div id="hide_re_add_div">
-              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> добавить выражение
+          <div class="option" id="hide_re_div">
+            <div id="hide_re_add_div" class="option">
+              <span class="glyphicon glyphicon-plus" aria-hidden="true" title="Добавить выражение"></span>
             </div>
+            <label class="label" for="hide_re_div">Фильтр по <a href="http://javascript.ru/basic/regular-expression+">RegExp</a></label>
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-8" for="likes_filter">Фильтр лайков (скрывать посты, у которых лайков меньше указанного количества)</label>
-          <div class="col-sm-4">
-            <input type="number" id="likes_filter">
+          <div class="option">
+            <input type="number" id="likes_filter" title="Cкрывать посты, у которых лайков меньше указанного количества">
           </div>
+          <label class="label" for="likes_filter" title="Cкрывать посты, у которых лайков меньше указанного количества">Фильтр лайков</label>
         </div>
         <div class="form-group">
-          <label class="col-sm-8" for="debug_mode">Режим разработки</label>
-          <div class="col-sm-4">
+          <div class="option">
             <input type="checkbox" id="debug_mode">
           </div>
+          <label class="label" for="debug_mode" title="Режим вывода отладочных сообщений в консоль браузера">Режим разработки</label>
         </div>
       </form>
 
       <div class="col-sm-12">
-        <div class="col-sm-8">
+        <div class="label">
         </div>
-        <div class="col-sm-4" id="status">
+        <div class="option" id="status" >
         </div>
       </div>
     </div>
