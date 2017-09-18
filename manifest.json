@@ -1,4 +1,6 @@
 {
+"update_url": "https://clients2.google.com/service/update2/crx",
+
   "manifest_version": 2
 
   ,"name": "Фильтр новостей ВК (ВКонтакте, VK, vk.com)"
@@ -12,7 +14,9 @@
     ,"128": "assets/icons/icon-128.png"
   }
   ,"options_page": "assets/options.html"
-  ,"permissions": ["storage"]
+  ,"permissions": [
+      "storage"
+  ]
 
   ,"content_scripts": [
     {
@@ -28,5 +32,13 @@
       ]
       ,"run_at": "document_end"
     }
-  ]
+],
+
+"browser_action": {
+    "default_title": "Открыть переводчик",
+    "default_icon": "assets/icons/icon-48.png",
+    "default_popup": "assets/options.html"
+}
+
+
 }

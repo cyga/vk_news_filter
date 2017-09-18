@@ -59,6 +59,7 @@
 
     function options_text() {
         return {
+            "likes_filter":     ''
         };
     }
 
@@ -73,7 +74,7 @@
 
     function save_options() {
         if(!is_storage_ok()) return;
-    
+
         var changed = false;
         for(var key in options_bool()) {
             if(opts[key] != jQuery('#'+key).prop('checked')) {
@@ -84,7 +85,7 @@
 
         for(var key in options_text()) {
             if(opts[key] != jQuery('#'+key).val()) {
-                opts[key]   = jQuery('#'+key).val();
+                opts[key]   = parseInt(jQuery('#'+key).val());
                 changed     = true;
             }
         }

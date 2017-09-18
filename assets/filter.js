@@ -9,6 +9,7 @@
             ,"show_adv":        false
             ,"show_adv_left":   false
             ,"hide_re":         []
+            ,"likes_filter":    0
             ,"debug_mode":      false
         }
         ,config         = config_default
@@ -230,6 +231,17 @@
                 debug("hide left adv block");
                 jQuery('#ads_left').hide();
             }
+
+            // hide posts which has likes less then config.filter_likes no matter on news feed or group page
+            if(config.likes_filter > 0) {
+                jQuery('.post_like_count').each(function() {
+                    if (parseInt(this.innerText) <= config.likes_filter || this.innerText === '') {
+                        jQuery(this).parents('div._post').hide();
+                        console.log('This inner text is empty');
+                    }
+                });
+            }
+
 
             time_filter = getTime();
             debug("time filter "+time_filter);
