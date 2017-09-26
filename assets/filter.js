@@ -192,21 +192,8 @@
             return false;
         }
         ,filter         = function() {
-            
-            var filter  = true;
-            // var filter  = false;
-            // if(!window.location.href.match("/feed")) {
-            //     filter  = false;
-            // }
-            // else {
-            //     if(window.location.href.match("section=notifications")) {
-            //         filter  = false;
-            //     }
-            //     else {
-            //         filter  = true;
-            //     }
-            // }
 
+            var filter  = true;
 
             if(filter) {
                 /* go through all elements and show/hide (can be on options change) */
@@ -219,7 +206,7 @@
                     el_jq.find('.post_like_count').each(function(idx, el) {
                         el = jQuery(el);
                         if('' != el.innerText) {
-                            n_likes = parseInt(this.innerText);
+                            n_likes = parseInt(this.innerText.replace(/ /g, ''));
                             // super-defensive :)
                             if(isNaN(n_likes)) {
                                 n_likes = 0;
@@ -227,7 +214,7 @@
                         }
                     });
 
-                    // posts filter only on feed page, not notifications 
+                    // posts filter only on feed page, not notifications
                     if(is_post_hidden(idx, el_jq, type) && window.location.href.match("/feed") && !window.location.href.match("section=notifications")) {
                         if(el_jq.is(':visible')) {
                             debug("hide element: ", el_jq);
@@ -240,7 +227,7 @@
                     } else if (n_likes < config.likes_filter) {
                         debug("hide element because of likes: ", el_jq);
                         el_jq.hide();
-                    }                    
+                    }
                     else {
                         if(el_jq.is(':hidden')) {
                             debug("show element: ", el_jq);
@@ -254,8 +241,8 @@
                     debug("hide left adv block");
                     jQuery('#ads_left').hide();
                 }
-            }            
-            
+            }
+
 
             time_filter = getTime();
             debug("time filter "+time_filter);
