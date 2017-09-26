@@ -47,7 +47,8 @@
 
     function options_bool() {
         return {
-            "show_reposts":     false
+             "filter_switch":   false
+            ,"show_reposts":    false
             ,"show_groups":     false
             ,"show_ig":         true
             ,"show_friends":    true
@@ -123,6 +124,7 @@
                     // update status to let user know options were saved
                     var status_el = jQuery('#status');
                     status_el.text('Настройки сохранены');
+                    console.log(opts);
                     setTimeout(function() {
                         status_el.text('');
                     }, 750);

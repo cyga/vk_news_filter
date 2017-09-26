@@ -193,7 +193,9 @@
         }
         ,filter         = function() {
 
-            var filter  = true;
+            var filter  = false;
+
+            filter = config.filter_switch;
 
             if(filter) {
                 /* go through all elements and show/hide (can be on options change) */
