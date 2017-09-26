@@ -86,9 +86,6 @@
         for(var key in options_text()) {
             if(opts[key] != jQuery('#'+key).val()) {
                 opts[key]   = parseInt(jQuery('#'+key).val());
-                if(isNaN(opts[key])) {
-                    opts[key] = 0;
-                }
                 changed     = true;
             }
         }

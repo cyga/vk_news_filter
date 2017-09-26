@@ -9,7 +9,7 @@
             ,"show_adv":        false
             ,"show_adv_left":   false
             ,"hide_re":         []
-            ,"likes_filter":      0
+            ,"likes_filter":    0
             ,"debug_mode":      false
         }
         ,config         = config_default
@@ -192,55 +192,31 @@
             return false;
         }
         ,filter         = function() {
-            
-            var filter  = true;
-            // var filter  = false;
-            // if(!window.location.href.match("/feed")) {
-            //     filter  = false;
-            // }
-            // else {
-            //     if(window.location.href.match("section=notifications")) {
-            //         filter  = false;
-            //     }
-            //     else {
-            //         filter  = true;
-            //     }
-            // }
-
+            /* filter only on feed page, not notifications */
+            var filter  = false;
+            if(!window.location.href.match("/feed")) {
+                filter  = false;
+            }
+            else {
+                if(window.location.href.match("section=notifications")) {
+                    filter  = false;
+                }
+                else {
+                    filter  = true;
+                }
+            }
 
             if(filter) {
                 /* go through all elements and show/hide (can be on options change) */
-                jQuery('div._post').each(function(idx, el) {
+                jQuery('div.feed_row').each(function(idx, el) {
                     var el_jq   = jQuery(el);
                     var type    = post_type(idx, el_jq);
-
-                    // count likes for easy check
-                    var n_likes = 0;
-                    el_jq.find('.post_like_count').each(function(idx, el) {
-                        el = jQuery(el);
-                        if('' != el.innerText) {
-                            n_likes = parseInt(this.innerText);
-                            // super-defensive :)
-                            if(isNaN(n_likes)) {
-                                n_likes = 0;
-                            }
-                        }
-                    });
-
-                    // posts filter only on feed page, not notifications 
-                    if(is_post_hidden(idx, el_jq, type) && window.location.href.match("/feed") && !window.location.href.match("section=notifications")) {
+                    if(is_post_hidden(idx, el_jq, type)) {
                         if(el_jq.is(':visible')) {
                             debug("hide element: ", el_jq);
                             el_jq.hide();
                         }
-
-                    // hide posts which have likes less then config.filter_likes
-                    // no matter on news feed or group page
-                    // config.likes_filter - is a number, checked in config.js
-                    } else if (n_likes < config.likes_filter) {
-                        debug("hide element because of likes: ", el_jq);
-                        el_jq.hide();
-                    }                    
+                    }
                     else {
                         if(el_jq.is(':hidden')) {
                             debug("show element: ", el_jq);
@@ -248,14 +224,28 @@
                         }
                     }
                 });
+            }
 
-                // hide left adv block no matter on the page
-                if(!config.show_adv_left) {
-                    debug("hide left adv block");
-                    jQuery('#ads_left').hide();
-                }
-            }            
-            
+            // hide left adv block no matter on the page
+            if(!config.show_adv_left) {
+                debug("hide left adv block");
+                jQuery('#ads_left').hide();
+            }
+
+            // hide posts which has likes less then config.filter_likes no matter on news feed or group page
+            if(config.likes_filter > 0) {
+                var clickOnLike = false;
+                jQuery('a.post_like').on('click', function(){
+                    clickOnLike = true;
+                });
+                jQuery('.post_like_count').each(function() {
+                    var likes = parseInt(this.innerText.replace(/ /g, ''));
+                    if (likes <= config.likes_filter || !this.innerText && !clickOnLike) {
+                        jQuery(this).parents('div._post').hide();
+                    }
+                });
+            }
+
 
             time_filter = getTime();
             debug("time filter "+time_filter);

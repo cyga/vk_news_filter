@@ -1,6 +1,5 @@
 body {
-    padding: 40px;
-    padding-top: 0;
+    padding: 0 40px;
     padding-right: 30px;
     /*background-color: rgb(236, 233, 228);*/
     background-color: cadetblue;
@@ -19,8 +18,28 @@ a {
 
 h1 {
     font-size: 20px;
-    line-height: 48px;
+    line-height: 20px;
     text-align: center;
+    margin: 10px;
+}
+
+h2 {
+    font-size: 14px;
+    text-align: center;
+    margin: 0;
+}
+
+hr {
+  box-shadow: 0 3px 8px black;
+  opacity: 0.4;
+}
+
+.options_header {
+    text-align: center;
+}
+
+.options_header input {
+    margin-top: 15px;
 }
 
 .option {
@@ -35,7 +54,7 @@ h1 {
 
 #hide_re_add_div:hover {
     transform: scale(1.2);
-    text-shadow: 0px 0px 10px black;    
+    text-shadow: 0px 0px 10px black;
 }
 
 #hide_re_add_div:active {
@@ -63,6 +82,8 @@ label:hover {
 .container {
     width: 300px;
     margin: 0 auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .form-horizontal {
@@ -76,4 +97,8 @@ label:hover {
     position: relative;
     text-align: right;
     /*right: 50%;*/
+}
+
+hr {
+    margin: 10px;
 }

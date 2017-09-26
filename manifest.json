@@ -9,9 +9,9 @@
   ,"version": "0.67"
   ,"author": "Александр Судаков <cygakoB@gmail.com>"
   ,"icons": {
-    "16":   "assets/icons/icon-16.png"
-    ,"48":  "assets/icons/icon-48.png"
-    ,"128": "assets/icons/icon-128.png"
+    "16":   "assets/icons/logo16.png"
+    ,"48":  "assets/icons/logo48.png"
+    ,"128": "assets/icons/logo128.png"
   }
   ,"options_page": "assets/options.html"
   ,"permissions": [
