@@ -54,13 +54,14 @@
             ,"show_friends":    true
             ,"show_adv":        false
             ,"show_adv_left":   false
+            ,"likes_filter":    false
             ,"debug_mode":      false
         };
     }
 
     function options_text() {
         return {
-            "likes_filter":     ''
+            "min_likes":     ''
         };
     }
 

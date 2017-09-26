@@ -2,14 +2,16 @@
     "use strict";
 
     var config_default  = {
-            "show_reposts":     false
+             "filter_switch":   false
+            ,"show_reposts":    false
             ,"show_groups":     false
             ,"show_ig":         true
             ,"show_friends":    true
             ,"show_adv":        false
             ,"show_adv_left":   false
             ,"hide_re":         []
-            ,"likes_filter":      0
+            ,"likes_filter":    false
+            ,"min_likes":       0
             ,"debug_mode":      false
         }
         ,config         = config_default
@@ -226,7 +228,7 @@
                     // hide posts which have likes less then config.filter_likes
                     // no matter on news feed or group page
                     // config.likes_filter - is a number, checked in config.js
-                    } else if (n_likes < config.likes_filter) {
+                } else if (config.likes_filter && n_likes < config.min_likes) {
                         debug("hide element because of likes: ", el_jq);
                         el_jq.hide();
                     }
