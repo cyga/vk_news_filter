@@ -201,7 +201,7 @@
 
             if(filter) {
                 /* go through all elements and show/hide (can be on options change) */
-                jQuery('div._post').each(function(idx, el) {
+                jQuery('div.post').each(function(idx, el) {
                     var el_jq   = jQuery(el);
                     var type    = post_type(idx, el_jq);
 
