@@ -33,6 +33,21 @@
         hide_re_add();
     });
 
+    //make filters checkboxes disabled on click on #filter_switch checkbox
+    jQuery('#filter_switch').on('click', function() {        
+        var checkbox = jQuery(this).parent().next().find('input');
+
+        if (this.checked) {
+            checkbox.prop('disabled', false);
+        } else {
+            checkbox.prop('disabled', true);
+        }
+    });
+
+
+
+
+
     // save/restore
     var opts    = {};
 
@@ -124,8 +139,7 @@
                 ,function() {
                     // update status to let user know options were saved
                     var status_el = jQuery('#status');
-                    status_el.text('Настройки сохранены');
-                    console.log(opts);
+                    status_el.text('Настройки сохранены');                    
                     setTimeout(function() {
                         status_el.text('');
                     }, 750);

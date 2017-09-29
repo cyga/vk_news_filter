@@ -74,11 +74,6 @@ hr {
     font-size: 100%;
 }
 
-label:hover {
-    font-weight: bold;
-    transition: 0.3s;
-}
-
 .container {
     width: 300px;
     margin: 0 auto;
