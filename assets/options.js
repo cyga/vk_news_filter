@@ -36,11 +36,14 @@
     //make filters checkboxes disabled on click on #filter_switch checkbox
     jQuery('#filter_switch').on('click', function() {        
         var checkbox = jQuery(this).parent().next().find('input');
+        var label = jQuery(this).parent().next().find('label');
 
         if (this.checked) {
             checkbox.prop('disabled', false);
+            label.removeClass('disabled');
         } else {
             checkbox.prop('disabled', true);
+            label.addClass('disabled');
         }
     });
 

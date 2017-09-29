@@ -65,13 +65,13 @@ hr {
 
 .label {
     font-weight: normal;
-    transition: 0.3s;
-}
-
-.label {
     display: inline-block;
     width: 20%;
     font-size: 100%;
+}
+
+.disabled {
+    opacity: 0.5;
 }
 
 .container {
