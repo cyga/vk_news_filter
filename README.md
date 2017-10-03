@@ -38,7 +38,7 @@ vk_news_filter
 РАЗРАБОТКА
 ----------
 
-* ссылки от goole:
+* ссылки от google:
   * https://developer.chrome.com/extensions - разработка расширений
   * https://developer.chrome.com/extensions/manifest - файл manifest.json
 
