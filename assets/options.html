@@ -68,13 +68,13 @@
             <div id="hide_re_add_div" class="option">
               <span class="glyphicon glyphicon-plus" aria-hidden="true" title="Добавить выражение"></span>
             </div>
-            <label class="label" for="hide_re_div">Фильтр по <a href="http://javascript.ru/basic/regular-expression+">RegExp</a></label>
+            <label class="label" for="hide_re_div" title="Cкрывать посты, у которых в тексте есть совпадения с указанным RegExp-выражением">Фильтр по <a href="http://javascript.ru/basic/regular-expression+">RegExp</a></label>
           </div>
         </div>
         <div class="form-group">
           <div class="option">
             <input type="checkbox" id="likes_filter">
-            <input type="number" id="min_likes" step="10" title="Cкрывать посты, у которых лайков меньше указанного количества">
+            <input type="number" id="min_likes" min="0" step="10" title="Cкрывать посты, у которых лайков меньше указанного количества">
           </div>
           <label class="label" for="min_likes" title="Cкрывать посты, у которых лайков меньше указанного количества">Фильтр лайков</label>
         </div>
