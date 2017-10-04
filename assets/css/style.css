@@ -46,6 +46,14 @@ hr {
     display: inline-block;
 }
 
+.glyphicon-remove {
+    margin-right: 5px;
+}
+
+.hide_re {
+    color: black;
+}
+
 #hide_re_add_div {
     text-shadow: 0px 0px 5px black;
     transition: 0.3s;

@@ -35,8 +35,8 @@
 ],
 
 "browser_action": {
-    "default_title": "Открыть переводчик",
-    "default_icon": "assets/icons/icon-48.png",
+    "default_title": "Фильтр новостей ВК",
+    "default_icon": "assets/icons/logo48.png",
     "default_popup": "assets/options.html"
 }
 
