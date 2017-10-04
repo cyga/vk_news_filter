@@ -33,24 +33,6 @@
         hide_re_add();
     });
 
-    //make filters checkboxes disabled on click on #filter_switch checkbox
-    jQuery('#filter_switch').on('click', function() {        
-        var checkbox = jQuery(this).parent().next().find('input');
-        var label = jQuery(this).parent().next().find('label');
-
-        if (this.checked) {
-            checkbox.prop('disabled', false);
-            label.removeClass('disabled');
-        } else {
-            checkbox.prop('disabled', true);
-            label.addClass('disabled');
-        }
-    });
-
-
-
-
-
     // save/restore
     var opts    = {};
 
@@ -65,21 +47,19 @@
 
     function options_bool() {
         return {
-             "filter_switch":   false
-            ,"show_reposts":    false
+            "show_reposts":     false
             ,"show_groups":     false
             ,"show_ig":         true
             ,"show_friends":    true
             ,"show_adv":        false
             ,"show_adv_left":   false
-            ,"likes_filter":    false
             ,"debug_mode":      false
         };
     }
 
     function options_text() {
         return {
-            "min_likes":     ''
+            "likes_filter":     ''
         };
     }
 
@@ -106,9 +86,6 @@
         for(var key in options_text()) {
             if(opts[key] != jQuery('#'+key).val()) {
                 opts[key]   = parseInt(jQuery('#'+key).val());
-                if(isNaN(opts[key])) {
-                    opts[key] = 0;
-                }
                 changed     = true;
             }
         }
@@ -142,7 +119,7 @@
                 ,function() {
                     // update status to let user know options were saved
                     var status_el = jQuery('#status');
-                    status_el.text('Настройки сохранены');                    
+                    status_el.text('Настройки сохранены');
                     setTimeout(function() {
                         status_el.text('');
                     }, 750);
