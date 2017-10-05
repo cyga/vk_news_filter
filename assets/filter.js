@@ -267,13 +267,12 @@
 
             var filter  = false;
             filter = config.filter_switch;
+            // number of selectors => to be more flexible
+            var sels_posts = [ 'div.post' ];
+            if(window.location.href.match("/feed")) {
+                sels_posts = [ 'div.feed_row' ];
+            }
             if(filter) {
-                // number of selectors => to be more flexible
-                var sels_posts = [ 'div.post' ];
-                if(window.location.href.match("/feed")) {
-                    sels_posts = [ 'div.feed_row' ];
-                }
-
                 for(var i=0; i<sels_posts.length; i++) {
                     var sel_posts  = sels_posts[i];
                     /* go through all elements and show/hide (can be on options change) */
@@ -330,6 +329,19 @@
                         debug("show left adv block: ", el_ads_left);
                         el_ads_left.show();
                     }
+                }
+            }
+            else {
+                // show all if we switched off
+                // to show again posts hidden by us
+                for(var i=0; i<sels_posts.length; i++) {
+                    var sel_posts  = sels_posts[i];
+                    jQuery(sel_posts).each(function(idx, el) {
+                        var el_jq   = jQuery(el);
+                        if(el_jq.is(':hidden')) {
+                            el_jq.show();
+                        }
+                    });
                 }
             }
 
