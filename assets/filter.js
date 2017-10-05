@@ -60,6 +60,8 @@
                 0 < el_jq.find('.published_by_wrap').length
                 ||
                 0 < el_jq.find('div[id^=feed_repost]').length
+                ||
+                0 < el_jq.find('div[class^=feed_repost]').length
             ) {
                 debug('post repost');
                 return POST_REPOST;
@@ -210,65 +212,69 @@
             filter = config.filter_switch;
 
             if(filter) {
-                /* go through all elements and show/hide (can be on options change) */
-                var sel_posts = 'div.post';
+                // number of selectors => to be more flexible
+                var sels_posts = [ 'div.post' ];
                 if(window.location.href.match("/feed")) {
-                    sel_posts = 'div.feed_row';
+                    sels_posts = [ 'div.feed_row' ];
                 }
 
-                jQuery(sel_posts).each(function(idx, el) {
-                    var el_jq   = jQuery(el);
-                    var type    = post_type(idx, el_jq);
+                for(var i=0; i<sels_posts.length; i++) {
+                    var sel_posts  = sels_posts[i];
+                    /* go through all elements and show/hide (can be on options change) */
+                    jQuery(sel_posts).each(function(idx, el) {
+                        var el_jq   = jQuery(el);
+                        var type    = post_type(idx, el_jq);
 
-                    // count likes for easy check
-                    var n_likes = 0;
-                    el_jq.find('.post_like_count').each(function(idx, el) {
-                        el = jQuery(el);
-                        if('' != el.innerText) {
-                            n_likes = parseInt(this.innerText.replace(/ /g, ''));
-                            // super-defensive :)
-                            if(isNaN(n_likes)) {
-                                n_likes = 0;
+                        // count likes for easy check
+                        var n_likes = 0;
+                        el_jq.find('.post_like_count').each(function(idx, el) {
+                            el = jQuery(el);
+                            if('' != el.innerText) {
+                                n_likes = parseInt(this.innerText.replace(/ /g, ''));
+                                // super-defensive :)
+                                if(isNaN(n_likes)) {
+                                    n_likes = 0;
+                                }
+                            }
+                        });
+
+                        // there were checks for page ealier:
+                        // 
+                        // but we want it not only for feed
+                        // notifications are obsolete but let's leave it
+                        if(
+                            is_post_hidden(idx, el_jq, type, n_likes)
+                            &&
+                            !window.location.href.match("section=notifications")
+                        ) {
+                            if(el_jq.is(':visible')) {
+                                debug("hide element: ", el_jq);
+                                el_jq.hide();
+                            }
+                        }
+                        else {
+                            if(el_jq.is(':hidden')) {
+                                debug("show element: ", el_jq);
+                                el_jq.show();
                             }
                         }
                     });
-
-					// there were checks for page ealier:
-					// 
-					// but we want it not only for feed
-					// notifications are obsolete but let's leave it
-                    if(
-						is_post_hidden(idx, el_jq, type, n_likes)
-						&&
-						!window.location.href.match("section=notifications")
-					) {
-                        if(el_jq.is(':visible')) {
-                            debug("hide element: ", el_jq);
-                            el_jq.hide();
-                        }
-                    }
-				   	else {
-                        if(el_jq.is(':hidden')) {
-                            debug("show element: ", el_jq);
-                            el_jq.show();
-                        }
-                    }
-                });
+                }
 
                 // hide left adv block no matter on the page
-				var el_ads_left = jQuery('#ads_left');
+                var el_ads_left = jQuery('#ads_left');
                 if(!config.show_adv_left) {
-					if(el_ads_left.is(':visible')) {
-						debug("hide left adv block");
-						el_ads_left.hide();
-					}
+                    if(el_ads_left.is(':visible')) {
+                        debug("hide left adv block");
+                        el_ads_left.hide();
+                    }
                 }
-				else {
-					if(el_ads_left.is(':hidden')) {
-						debug("show left adv block: ", el_ads_left);
-						el_ads_left.show();
-					}
-				}
+                else {
+                    if(el_ads_left.is(':hidden')) {
+                        debug("show left adv block: ", el_ads_left);
+                        el_ads_left.show();
+                    }
+                }
             }
 
             time_filter = getTime();
