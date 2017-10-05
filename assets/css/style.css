@@ -73,9 +73,9 @@ hr {
 
 .label {
     font-weight: normal;
-    display: inline-block;
-    width: 20%;
+    display: inline-block;    
     font-size: 100%;
+    padding-right: 0;
 }
 
 .disabled {
@@ -93,13 +93,17 @@ hr {
     width: 650px;
 }
 
+input {
+    border-radius: 5px;
+    border: 2px solid transparent;  
+}
+
 
 #min_likes {
     width: 70px;
     color: black;
     position: relative;
-    text-align: right;
-    /*right: 50%;*/
+    text-align: right; 
 }
 
 hr {
