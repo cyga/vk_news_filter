@@ -162,7 +162,7 @@
 				</div>
 
                 // another case:
-                <div id="ads_feed_placeholder"></div> 
+                <div id="ads_feed_placeholder"></div>
              */
             if(
                 el_jq.find('div[class*=promoted_post]').length
@@ -228,6 +228,31 @@
 
             return false;
         }
+        ,is_on_screen = function(el){
+			var win = jQuery(window);
+
+			var viewport = {
+				top: 	win.scrollTop()
+				,left: 	win.scrollLeft()
+			};
+			viewport.right 	= viewport.left + win.width();
+			viewport.bottom = viewport.top + win.height();
+
+			var bounds 		= el.offset();
+			bounds.right 	= bounds.left + el.outerWidth();
+			bounds.bottom 	= bounds.top + el.outerHeight();
+
+			return (!(
+				viewport.right < bounds.left
+                ||
+                viewport.left > bounds.right
+                ||
+                viewport.bottom < bounds.top
+                ||
+                viewport.top > bounds.bottom
+            ));
+
+		}
         ,filter         = function() {
             var more_sels = [
                 '#show_more_link'
@@ -235,7 +260,7 @@
             ];
             for(var i=0; i<more_sels.length; i++) {
                 var el_more = jQuery(more_sels[i]);
-                if(el_more && el_more.is(':visible')) {
+                if(el_more && el_more.is(':visible') && is_on_screen(el_more)) {
                     el_more.click();
                 }
             }
@@ -270,7 +295,7 @@
                         });
 
                         // there were checks for page ealier:
-                        // 
+                        //
                         // but we want it not only for feed
                         // notifications are obsolete but let's leave it
                         if(
