@@ -44,6 +44,7 @@ hr {
 
 .option {
     display: inline-block;
+    vertical-align: middle;
 }
 
 .glyphicon-remove {
@@ -73,9 +74,9 @@ hr {
 
 .label {
     font-weight: normal;
-    display: inline-block;
-    width: 20%;
+    display: inline-block;    
     font-size: 100%;
+    padding-right: 0;    
 }
 
 .disabled {
@@ -91,6 +92,12 @@ hr {
 
 .form-horizontal {
     width: 650px;
+    margin-top: 20px;
+}
+
+input {
+    border-radius: 5px;
+    border: 2px solid transparent;  
 }
 
 
@@ -98,8 +105,7 @@ hr {
     width: 70px;
     color: black;
     position: relative;
-    text-align: right;
-    /*right: 50%;*/
+    text-align: right; 
 }
 
 hr {
