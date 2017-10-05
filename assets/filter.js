@@ -219,7 +219,9 @@
                     });
 
                     // posts filter only on feed page, not notifications
-                    if(is_post_hidden(idx, el_jq, type) && window.location.href.match("/feed") && !window.location.href.match("section=notifications")) {
+                    if(is_post_hidden(idx, el_jq, type)
+                        && window.location.href.match("/feed")
+                        && !window.location.href.match("section=notifications")) {
                         if(el_jq.is(':visible')) {
                             debug("hide element: ", el_jq);
                             el_jq.hide();
@@ -227,12 +229,14 @@
 
                     // hide posts which have likes less then config.filter_likes
                     // no matter on news feed or group page
-                    // config.likes_filter - is a number, checked in config.js
-                } else if (config.likes_filter && n_likes < config.min_likes) {
+                    // config.likes_filter - is a boolean variable,
+                    // that enable or disable filtering by likes count
+                    //
+                    } else if (config.likes_filter && config.min_likes >= n_likes) {
+                    //} else if (config.likes_filter && n_likes < config.min_likes ) {
                         debug("hide element because of likes: ", el_jq);
                         el_jq.hide();
-                    }
-                    else {
+                    } else {
                         if(el_jq.is(':hidden')) {
                             debug("show element: ", el_jq);
                             el_jq.show();
