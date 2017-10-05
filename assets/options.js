@@ -151,6 +151,18 @@
         }
     }
 
+    // number of calls to chrome.storage.sync.get
+    var n_options2restore = 3;
+    function restore_option() {
+        n_options2restore--;
+        if(0 == n_options2restore) {
+            // code to run on all options restored event
+            // because code after restore_options()
+            // doesn't work properly without such async call
+            switch_ui();
+        }
+    }
+
     function restore_options() {
         if(!is_storage_ok()) return;
 
@@ -160,6 +172,7 @@
                 for(var key in options_bool()) {
                     jQuery('#'+key).prop('checked', opts[key] = items[key]);
                 }
+                restore_option();
             }
         );
 
@@ -169,6 +182,7 @@
                 for(var key in options_text()) {
                     jQuery('#'+key).val( opts[key] = items[key] );
                 }
+                restore_option();
             }
         );
 
@@ -197,11 +211,10 @@
                         options_text_groups_add[key]( opts[key][i] );
                     }
                 }
+                restore_option();
             }
         );
     }
 
     restore_options();
-
-    switch_ui();
 }(document));
