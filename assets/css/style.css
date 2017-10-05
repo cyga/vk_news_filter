@@ -1,8 +1,7 @@
 body {
     padding: 0 40px;
     padding-right: 30px;
-    /*background-color: rgb(236, 233, 228);*/
-    background-color: cadetblue;
+    background-color: rgb(80, 114, 153);
     background-image: linear-gradient(45deg, rgba(74,58,182,0.1) 0%, rgba(158,152,198,0) 46%, rgba(207,207,207,0) 73%),
     linear-gradient(-135deg, rgba(182,58,182,0.25) 0%, rgba(198,152,198,0) 46%, rgba(207,207,207,0) 73%);
     box-shadow: inset 0px 0px 183px -23px rgba(0,0,0,0.7);
