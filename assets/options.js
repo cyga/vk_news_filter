@@ -5,6 +5,13 @@
     for(var key in options_bool()) {
         jQuery('#'+key).change(save_options);
     }
+    function init_number(sel) {
+        jQuery(sel).change(save_options);
+        jQuery(sel).keyup(save_options);
+    }
+    for(var key in options_number()) {
+        init_number('#'+key);
+    }
     function init_text(sel) {
         jQuery(sel).change(save_options);
         jQuery(sel).keyup(save_options);
@@ -24,12 +31,15 @@
     function hide_re_add(val) {
         if(undefined === val || null === val)
             val = '';
-        jQuery('<div> <span class="glyphicon glyphicon-remove" aria-hidden="true"></span><input class="hide_re" type="text" value="'+val+'"></div>')
+        jQuery('<div> <span class="glyphicon glyphicon-remove" aria-hidden="true"></span><input class="hide_re" type="text" value="'+val+'" placeholder="текст для фильтра"></div>')
             .insertBefore( jQuery('#hide_re_add_div') );
         init_hide_re_remove();
         init_text('.hide_re');
     }
     jQuery('#hide_re_add_div').click(function() {
+        hide_re_add();
+    });
+    jQuery('#hide_re_label').click(function() {
         hide_re_add();
     });
 
@@ -76,13 +86,16 @@
             ,"debug_mode":      false
         };
     }
-
     function options_text() {
         return {
-            "min_likes":     ''
+            "search_text":   ''
         };
     }
-
+    function options_number() {
+        return {
+            "min_likes":     0
+        };
+    }
     function options_text_groups() {
         return {
             "hide_re":          []
@@ -103,12 +116,19 @@
             }
         }
 
-        for(var key in options_text()) {
+        for(var key in options_number()) {
             if(opts[key] != jQuery('#'+key).val()) {
                 opts[key]   = parseInt(jQuery('#'+key).val());
                 if(isNaN(opts[key])) {
                     opts[key] = 0;
                 }
+                changed     = true;
+            }
+        }
+
+        for(var key in options_text()) {
+            if(opts[key] != jQuery('#'+key).val()) {
+                opts[key]   = jQuery('#'+key).val();
                 changed     = true;
             }
         }
@@ -152,7 +172,7 @@
     }
 
     // number of calls to chrome.storage.sync.get
-    var n_options2restore = 3;
+    var n_options2restore = 0;
     function restore_option() {
         n_options2restore--;
         if(0 == n_options2restore) {
@@ -166,6 +186,7 @@
     function restore_options() {
         if(!is_storage_ok()) return;
 
+        n_options2restore++;
         chrome.storage.sync.get(
             options_bool()
             ,function(items) {
@@ -176,6 +197,7 @@
             }
         );
 
+        n_options2restore++;
         chrome.storage.sync.get(
             options_text()
             ,function(items) {
@@ -186,6 +208,18 @@
             }
         );
 
+        n_options2restore++;
+        chrome.storage.sync.get(
+            options_number()
+            ,function(items) {
+                for(var key in options_number()) {
+                    jQuery('#'+key).val( opts[key] = items[key] );
+                }
+                restore_option();
+            }
+        );
+
+        n_options2restore++;
         chrome.storage.sync.get(
             options_text_groups()
             ,function(items) {

@@ -9,6 +9,7 @@
             ,"show_friends":    true
             ,"show_adv":        false
             ,"show_adv_left":   false
+            ,"search_text":     ''
             ,"hide_re":         []
             ,"likes_filter":    false
             ,"min_likes":       0
@@ -48,12 +49,13 @@
             // possible problem: unshown first debug calls
             if(config.debug_mode) console.log.apply(console, ["[ERROR]"].concat(arguments));
         }
-        ,POST_REPOST    = 'post_repost'
-        ,POST_GROUP     = 'post_group'
-        ,POST_IG        = 'post_ig'
-        ,POST_FRIENDS   = 'post_friends'
-        ,POST_ADV       = 'post_adv'
-        ,HIDE_RE        = 'hide_re'
+        ,POST_REPOST            = 'post_repost'
+        ,POST_GROUP             = 'post_group'
+        ,POST_IG                = 'post_ig'
+        ,POST_FRIENDS           = 'post_friends'
+        ,POST_ADV               = 'post_adv'
+        ,HIDE_RE                = 'hide_re'
+        ,SEARCH_TEXT_MISMATCH   = 'search_text_mismatch'
         ,post_type      = function(idx, el) {
             var el_jq = jQuery(el);
             if(
@@ -65,6 +67,22 @@
             ) {
                 debug('post repost');
                 return POST_REPOST;
+            }
+
+            if(config.search_text && config.search_text.length) {
+                var suits   = false;
+                try {
+                    var re  = new RegExp( config.search_text, "i" );
+                    suits   = el_jq.text().match(re);
+                }
+                catch(e) {
+                    error("can't check "+config.search_text+" for search_text:", e);
+                }
+
+                if(!suits) {
+                    debug("post search text mismatch");
+                    return SEARCH_TEXT_MISMATCH;
+                }
             }
 
             if(config.hide_re) {
@@ -87,8 +105,10 @@
                 for(var i=0; i<hide_re.length; i++) {
                     var suits   = false;
                     try {
-                        var re  = new RegExp( hide_re[i], "i" );
-                        suits   = el_jq.text().match(re);
+                        if(hide_re[i] && hide_re[i].length) {
+                            var re  = new RegExp( hide_re[i], "i" );
+                            suits   = el_jq.text().match(re);
+                        }
                     }
                     catch(e) {
                         error("can't check "+i+"th hide_re:", e);
@@ -190,6 +210,8 @@
 
             // based on type only:
             switch(type) {
+                case SEARCH_TEXT_MISMATCH:
+                    return true;
                 case HIDE_RE:
                     return true;
                 case POST_REPOST:
@@ -207,9 +229,15 @@
             return false;
         }
         ,filter         = function() {
-            var el_more = jQuery('#show_more_link');
-            if(el_more.is(':visible')) {
-                el_more.click();
+            var more_sels = [
+                '#show_more_link'
+                ,'#wall_more_link'
+            ];
+            for(var i=0; i<more_sels.length; i++) {
+                var el_more = jQuery(more_sels[i]);
+                if(el_more && el_more.is(':visible')) {
+                    el_more.click();
+                }
             }
 
             var filter  = false;
