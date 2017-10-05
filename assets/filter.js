@@ -207,6 +207,11 @@
             return false;
         }
         ,filter         = function() {
+            var el_more = jQuery('#show_more_link');
+            if(el_more.is(':visible')) {
+                el_more.click();
+            }
+
             var filter  = false;
             filter = config.filter_switch;
             if(filter) {
