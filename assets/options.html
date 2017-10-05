@@ -9,6 +9,7 @@
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -19,66 +20,80 @@
   </head>
   <body>
     <div class="container">
+      <div class="options_header">
+        <h1>Фильтр новостей vk.com</h1>
+        <h2>v0.67</h2>
+        <input class "label" type="checkbox" id="filter_switch">
+        <hr>
+      </div>
       <form class="form-horizontal">
         <div class="form-group">
-          <label class="col-sm-4" for="show_reposts">Показывать репосты</label>
-          <div class="col-sm-8">
+          <div class="option">
             <input type="checkbox" id="show_reposts">
           </div>
+          <label class="label" for="show_reposts">Показывать репосты</label>
         </div>
         <div class="form-group">
-          <label class="col-sm-4" for="show_groups">Показывать группы</label>
-          <div class="col-sm-8">
+          <div class="option">
             <input type="checkbox" id="show_groups">
           </div>
+          <label class="label" for="show_groups">Показывать группы</label>
         </div>
         <div class="form-group">
-          <label class="col-sm-4" for="show_ig">Показывать InstaGram</label>
-          <div class="col-sm-8">
+          <div class="option">
             <input type="checkbox" id="show_ig">
           </div>
+          <label class="label" for="show_ig">Показывать InstaGram</label>
         </div>
         <div class="form-group">
-          <label class="col-sm-4" for="show_friends">Показывать новости друзей</label>
-          <div class="col-sm-8">
+          <div class="option">
             <input type="checkbox" id="show_friends">
           </div>
+          <label class="label" for="show_friends">Показывать новости друзей</label>
         </div>
         <div class="form-group">
-          <label class="col-sm-4" for="show_adv">Показывать рекламу в ленте</label>
-          <div class="col-sm-8">
+          <div class="option">
             <input type="checkbox" id="show_adv">
           </div>
+          <label class="label" for="show_adv">Показывать рекламу в ленте</label>
         </div>
         <div class="form-group">
-          <label class="col-sm-4" for="show_adv_left">Показывать рекламу слева</label>
-          <div class="col-sm-8">
+          <div class="option">
             <input type="checkbox" id="show_adv_left">
           </div>
+          <label class="label" for="show_adv_left">Показывать рекламу слева</label>
         </div>
         <div class="form-group">
-          <label class="col-sm-4" for="hide_re_div">Фильтровать по выражению (текст или <a href="http://javascript.ru/basic/regular-expression+">регулярное выражение JavaScript</a>)</label>
-          <div class="col-sm-8" id="hide_re_div">
-            <div id="hide_re_add_div">
-              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> добавить ещё одно выражение
+          <div class="option" id="hide_re_div">
+            <div id="hide_re_add_div" class="option">
+              <span class="glyphicon glyphicon-plus" aria-hidden="true" title="Добавить выражение"></span>
             </div>
+            <label class="label" for="hide_re_div" title="Cкрывать посты, у которых в тексте есть совпадения с указанным RegExp-выражением">Фильтр по <a href="http://javascript.ru/basic/regular-expression+">RegExp</a></label>
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-4" for="debug_mode">Режим разработки</label>
-          <div class="col-sm-8">
+          <div class="option">
+            <input type="checkbox" id="likes_filter">
+          </div>
+          <label class="label" for="likes_filter" title="Cкрывать посты, у которых лайков меньше указанного количества">Фильтр лайков >= </label>
+          <input type="number" id="min_likes" min="0" step="10" title="Cкрывать посты, у которых лайков меньше указанного количества">                    
+        </div>
+        <div class="form-group">
+          <div class="option">
             <input type="checkbox" id="debug_mode">
           </div>
+          <label class="label" for="debug_mode" title="Режим вывода отладочных сообщений в консоль браузера">Режим разработки</label>
         </div>
       </form>
-
+      <hr class="hr-bottom">
       <div class="col-sm-12">
-        <div class="col-sm-4">
+        <div class="label">
         </div>
-        <div class="col-sm-8" id="status">
+        <div class="option" id="status" >
         </div>
       </div>
     </div>
+
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="js/jquery.min.js"></script>

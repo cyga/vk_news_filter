@@ -1,0 +1,111 @@
+body {
+    padding: 0 40px;
+    padding-right: 30px;
+    /*background-color: rgb(236, 233, 228);*/
+    background-color: cadetblue;
+    background-image: linear-gradient(45deg, rgba(74,58,182,0.1) 0%, rgba(158,152,198,0) 46%, rgba(207,207,207,0) 73%),
+    linear-gradient(-135deg, rgba(182,58,182,0.25) 0%, rgba(198,152,198,0) 46%, rgba(207,207,207,0) 73%);
+    box-shadow: inset 0px 0px 183px -23px rgba(0,0,0,0.7);
+    color: white;
+    text-shadow: 1px 1px 6px black;
+    min-height: 100vh;
+}
+
+a {
+    color: rgb(37, 66, 122);
+    text-shadow: 0px 0px 1px rgba(0,0,0,0.7);
+}
+
+h1 {
+    font-size: 20px;
+    line-height: 20px;
+    text-align: center;
+    margin: 10px;
+}
+
+h2 {
+    font-size: 14px;
+    text-align: center;
+    margin: 0;
+}
+
+hr {
+  box-shadow: 0 3px 8px black;
+  opacity: 0.4;
+}
+
+.options_header {
+    text-align: center;
+}
+
+.options_header input {
+    margin-top: 15px;
+}
+
+.option {
+    display: inline-block;
+}
+
+.glyphicon-remove {
+    margin-right: 5px;
+}
+
+.hide_re {
+    color: black;
+}
+
+#hide_re_add_div {
+    text-shadow: 0px 0px 5px black;
+    transition: 0.3s;
+}
+
+
+#hide_re_add_div:hover {
+    transform: scale(1.2);
+    text-shadow: 0px 0px 10px black;
+}
+
+#hide_re_add_div:active {
+    transform: scale(1);
+    text-shadow: 0px 0px 2px black;
+    transition: 0.3s;
+}
+
+.label {
+    font-weight: normal;
+    display: inline-block;    
+    font-size: 100%;
+    padding-right: 0;
+}
+
+.disabled {
+    opacity: 0.5;
+}
+
+.container {
+    width: 300px;
+    margin: 0 auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.form-horizontal {
+    width: 650px;
+}
+
+input {
+    border-radius: 5px;
+    border: 2px solid transparent;  
+}
+
+
+#min_likes {
+    width: 70px;
+    color: black;
+    position: relative;
+    text-align: right; 
+}
+
+hr {
+    margin: 10px;
+}
