@@ -61,6 +61,7 @@
                 ||
                 0 < el_jq.find('div[id^=feed_repost]').length
             ) {
+                debug('post repost');
                 return POST_REPOST;
             }
 
@@ -91,27 +92,15 @@
                         error("can't check "+i+"th hide_re:", e);
                     }
 
-                    if(suits) return HIDE_RE;
+                    if(suits) {
+                        debug("post re");
+                        return HIDE_RE;
+                    }
                 }
             }
 
-            var author_el       = el_jq.find('a.author').first();
-            var author_id       = author_el ? jQuery(author_el).attr('data-from-id') : null;
-            if(null != author_id) {
-                author_id   = parseInt(author_id);
-                if(NaN != author_id) {
-                    // looks like persons ids are positive
-                    if(0 > author_id) return POST_GROUP;
-                }
-            }
-
-            // one more way based on negative group's id
-            var post_el         = (el_jq.find('div.post').first())[0];
-            var post_id         = post_el ? jQuery(post_el).attr('id') : null;
-            if(null != post_id && post_id.match(/\-\d/)) {
-                return POST_GROUP;
-            }
-
+            // we don't have any special info on instagram
+            /*
             // one more way based on negative group's id
             if(
                 el_jq.find('a').toArray()
@@ -124,9 +113,12 @@
                     ,false
                 )
             ) {
+                debug('post ig');
                 return POST_IG;
             }
+            */
 
+            // it doesn't work anymore
             /*
 				1. example:
 				<span class="explain"><span class="wall_text_name_explain_promoted_post" onmouseover="showTooltip(this, {text: &quot;<div class=\&quot;content\&quot;><span class=\&quot;header\&quot;>Рекламная запись<\/span><br>Эта запись добавлена в новостную ленту на основе Ваших интересов и информации из профиля.<\/div>&quot;, slide: 15, shift: [50, 0, 0], showdt: 400, hidedt: 200, className: 'wall_tt promoted_post_tt', hasover: true});">Рекламная запись</span></span>
@@ -146,32 +138,43 @@
 						</div>
 					</div>
 				</div>
+
+                // another case:
+                <div id="ads_feed_placeholder"></div> 
              */
             if(
-                el_jq.find('[class*=promoted_post]').length
+                el_jq.find('div[class*=promoted_post]').length
+                ||
+                el_jq.find('div[id^=ads_]').length
             ) {
+                debug('post adv');
                 return POST_ADV;
             }
 
-            /*
-             */
-            if(
-                el_jq.find('span').toArray()
-                // check if we have element, that hasClass for instagram
-                .reduce(
-                    function(prev, curr) {
-                        return prev ? prev
-                            : jQuery(curr).hasClass("wall_text_name_explain_promoted_post") ? true : false
+            var author_el       = el_jq.find('a.author').first();
+            var author_id       = author_el ? jQuery(author_el).attr('data-from-id') : null;
+            if(null != author_id) {
+                author_id   = parseInt(author_id);
+                if(NaN != author_id) {
+                    // looks like persons ids are positive
+                    if(0 > author_id) {
+                        debug('post group');
+                        return POST_GROUP;
                     }
-                    ,false
-                )
-            ) {
-                return POST_ADV;
+                }
             }
 
+            var post_el         = (el_jq.find('div.post').first())[0];
+            var post_id         = post_el ? jQuery(post_el).attr('id') : null;
+            if(null != post_id && post_id.match(/\-\d/)) {
+                debug('post group');
+                return POST_GROUP;
+            }
+
+            debug('post friends');
             return POST_FRIENDS;
         }
-        ,is_post_hidden = function(idx, el, type) {
+        ,is_post_hidden = function(idx, el, type, n_likes) {
             if(null === type || undefined === type)
                 type = post_type(idx, el);
 
@@ -191,17 +194,29 @@
                     return !config.show_adv;
             }
 
+			// hide posts which have likes less then config.filter_likes
+			// no matter on news feed or group page
+			// config.likes_filter - is a boolean variable,
+			// that enable or disable filtering by likes count
+			if(config.likes_filter && config.min_likes > n_likes) {
+				return true;
+			}
+
             return false;
         }
         ,filter         = function() {
-
             var filter  = false;
 
             filter = config.filter_switch;
 
             if(filter) {
                 /* go through all elements and show/hide (can be on options change) */
-                jQuery('div.post').each(function(idx, el) {
+                var sel_posts = 'div.post';
+                if(window.location.href.match("/feed")) {
+                    sel_posts = 'div.feed_row';
+                }
+
+                jQuery(sel_posts).each(function(idx, el) {
                     var el_jq   = jQuery(el);
                     var type    = post_type(idx, el_jq);
 
@@ -218,25 +233,21 @@
                         }
                     });
 
-                    // posts filter only on feed page, not notifications
-                    if(is_post_hidden(idx, el_jq, type)
-                        && window.location.href.match("/feed")
-                        && !window.location.href.match("section=notifications")) {
+					// there were checks for page ealier:
+					// 
+					// but we want it not only for feed
+					// notifications are obsolete but let's leave it
+                    if(
+						is_post_hidden(idx, el_jq, type, n_likes)
+						&&
+						!window.location.href.match("section=notifications")
+					) {
                         if(el_jq.is(':visible')) {
                             debug("hide element: ", el_jq);
                             el_jq.hide();
                         }
-
-                    // hide posts which have likes less then config.filter_likes
-                    // no matter on news feed or group page
-                    // config.likes_filter - is a boolean variable,
-                    // that enable or disable filtering by likes count
-                    //
-                    } else if (config.likes_filter && config.min_likes >= n_likes) {
-                    //} else if (config.likes_filter && n_likes < config.min_likes ) {
-                        debug("hide element because of likes: ", el_jq);
-                        el_jq.hide();
-                    } else {
+                    }
+				   	else {
                         if(el_jq.is(':hidden')) {
                             debug("show element: ", el_jq);
                             el_jq.show();
@@ -245,12 +256,20 @@
                 });
 
                 // hide left adv block no matter on the page
+				var el_ads_left = jQuery('#ads_left');
                 if(!config.show_adv_left) {
-                    debug("hide left adv block");
-                    jQuery('#ads_left').hide();
+					if(el_ads_left.is(':visible')) {
+						debug("hide left adv block");
+						el_ads_left.hide();
+					}
                 }
+				else {
+					if(el_ads_left.is(':hidden')) {
+						debug("show left adv block: ", el_ads_left);
+						el_ads_left.show();
+					}
+				}
             }
-
 
             time_filter = getTime();
             debug("time filter "+time_filter);
