@@ -34,22 +34,22 @@
     });
 
     //make filters checkboxes disabled on click on #filter_switch checkbox
-    jQuery('#filter_switch').on('click', function() {        
-        var checkbox = jQuery(this).parent().next().find('input');
-        var label = jQuery(this).parent().next().find('label');
+    function switch_ui() {
+        var el_switch = jQuery('#filter_switch');
+        var checkbox = jQuery('#form_options').find('input');
+        var label = jQuery('#form_options').find('label');
 
-        if (this.checked) {
+        if(el_switch.is(':checked')) {
             checkbox.prop('disabled', false);
             label.removeClass('disabled');
         } else {
             checkbox.prop('disabled', true);
             label.addClass('disabled');
         }
+    }
+    jQuery('#filter_switch').on('click', function() {
+        switch_ui();
     });
-
-
-
-
 
     // save/restore
     var opts    = {};
@@ -142,7 +142,7 @@
                 ,function() {
                     // update status to let user know options were saved
                     var status_el = jQuery('#status');
-                    status_el.text('Настройки сохранены');                    
+                    status_el.text('Настройки сохранены');
                     setTimeout(function() {
                         status_el.text('');
                     }, 750);
@@ -202,4 +202,6 @@
     }
 
     restore_options();
+
+    switch_ui();
 }(document));
