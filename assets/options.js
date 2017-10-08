@@ -21,7 +21,7 @@
     }
 
     function init_hide_re_remove() {
-        jQuery('.glyphicon-remove').click(function() {
+        jQuery('.filter_re.glyphicon-remove').click(function() {
             jQuery(this).parents('div').first().remove();
             save_options();
         });
@@ -31,7 +31,7 @@
     function hide_re_add(val) {
         if(undefined === val || null === val)
             val = '';
-        jQuery('<div> <span class="glyphicon glyphicon-remove" aria-hidden="true"></span><input class="hide_re" type="text" value="'+val+'" placeholder="текст для фильтра"></div>')
+        jQuery('<div> <span class="filter_re glyphicon glyphicon-remove" aria-hidden="true"></span><input class="hide_re" type="text" value="'+val+'" placeholder="текст для фильтра"></div>')
             .insertBefore( jQuery('#hide_re_add_div') );
         init_hide_re_remove();
         init_text('.hide_re');
@@ -251,4 +251,9 @@
     }
 
     restore_options();
+
+    jQuery("#search_clear").click(function(){
+        // only user's actions trigger change => force it
+        jQuery("#search_text").val('').trigger('change');
+    });
 }(document));

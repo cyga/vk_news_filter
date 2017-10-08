@@ -100,7 +100,6 @@ input {
     border: 2px solid transparent;  
 }
 
-
 #min_likes {
     width: 70px;
     color: black;
@@ -110,4 +109,20 @@ input {
 
 hr {
     margin: 10px;
+}
+
+#search_text {
+    width: 200px;
+}
+#search_clear {
+    text-shadow: 0 0;
+    position: absolute;
+    right: 5px;
+    top: 0;
+    bottom: 0;
+    height: 14px;
+    margin: auto;
+    font-size: 14px;
+    cursor: pointer;
+    color: #ccc;
 }
