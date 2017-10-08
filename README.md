@@ -11,8 +11,8 @@ vk_news_filter
 * нажать "установить"
 
 2ой через последнюю версию кода:
-* забрать последнюю версию кода с github'а [github](https://github.com/cyga/vk_news_filter)
-* отрыть расширения в хроме: [chrome://extensions](chrome://extensions)
+* забрать последнюю версию кода с [github](https://github.com/cyga/vk_news_filter)
+* отрыть расширение в хроме: [chrome://extensions](chrome://extensions)
 * включить режим разработчика
 * загрузить папку с расширением
 * в случае самостоятельного изменения кода, обновите расширение:
