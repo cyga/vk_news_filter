@@ -57,6 +57,9 @@ hr {
 input[type=text] {
     color: black;
 }
+select {
+    color: black;
+}
 
 #hide_re_add_div {
     text-shadow: 0px 0px 5px black;

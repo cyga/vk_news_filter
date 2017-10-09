@@ -19,6 +19,9 @@
     for(var key in options_text()) {
         init_text('#'+key);
     }
+    for(var key in options_select()) {
+        jQuery('#'+key).change(save_options);
+    }
 
     function init_hide_re_remove() {
         jQuery('.filter_re.glyphicon-remove').click(function() {
@@ -96,6 +99,11 @@
             "min_likes":     0
         };
     }
+    function options_select() {
+        return {
+             "likes_filter_op": 'ge'
+        };
+    }
     function options_text_groups() {
         return {
             "hide_re":          []
@@ -127,6 +135,13 @@
         }
 
         for(var key in options_text()) {
+            if(opts[key] != jQuery('#'+key).val()) {
+                opts[key]   = jQuery('#'+key).val();
+                changed     = true;
+            }
+        }
+
+        for(var key in options_select()) {
             if(opts[key] != jQuery('#'+key).val()) {
                 opts[key]   = jQuery('#'+key).val();
                 changed     = true;
@@ -213,6 +228,17 @@
             options_number()
             ,function(items) {
                 for(var key in options_number()) {
+                    jQuery('#'+key).val( opts[key] = items[key] );
+                }
+                restore_option();
+            }
+        );
+
+        n_options2restore++;
+        chrome.storage.sync.get(
+            options_select()
+            ,function(items) {
+                for(var key in options_select()) {
                     jQuery('#'+key).val( opts[key] = items[key] );
                 }
                 restore_option();
