@@ -19,9 +19,12 @@
     for(var key in options_text()) {
         init_text('#'+key);
     }
+    for(var key in options_select()) {
+        jQuery('#'+key).change(save_options);
+    }
 
     function init_hide_re_remove() {
-        jQuery('.glyphicon-remove').click(function() {
+        jQuery('.filter_re.glyphicon-remove').click(function() {
             jQuery(this).parents('div').first().remove();
             save_options();
         });
@@ -31,7 +34,7 @@
     function hide_re_add(val) {
         if(undefined === val || null === val)
             val = '';
-        jQuery('<div> <span class="glyphicon glyphicon-remove" aria-hidden="true"></span><input class="hide_re" type="text" value="'+val+'" placeholder="текст для фильтра"></div>')
+        jQuery('<div> <span class="filter_re glyphicon glyphicon-remove" aria-hidden="true"></span><input class="hide_re" type="text" value="'+val+'" placeholder="текст для фильтра"></div>')
             .insertBefore( jQuery('#hide_re_add_div') );
         init_hide_re_remove();
         init_text('.hide_re');
@@ -96,6 +99,11 @@
             "min_likes":     0
         };
     }
+    function options_select() {
+        return {
+             "likes_filter_op": 'ge'
+        };
+    }
     function options_text_groups() {
         return {
             "hide_re":          []
@@ -127,6 +135,13 @@
         }
 
         for(var key in options_text()) {
+            if(opts[key] != jQuery('#'+key).val()) {
+                opts[key]   = jQuery('#'+key).val();
+                changed     = true;
+            }
+        }
+
+        for(var key in options_select()) {
             if(opts[key] != jQuery('#'+key).val()) {
                 opts[key]   = jQuery('#'+key).val();
                 changed     = true;
@@ -221,6 +236,17 @@
 
         n_options2restore++;
         chrome.storage.sync.get(
+            options_select()
+            ,function(items) {
+                for(var key in options_select()) {
+                    jQuery('#'+key).val( opts[key] = items[key] );
+                }
+                restore_option();
+            }
+        );
+
+        n_options2restore++;
+        chrome.storage.sync.get(
             options_text_groups()
             ,function(items) {
                 for(var key in options_text_groups()) {
@@ -251,4 +277,9 @@
     }
 
     restore_options();
+
+    jQuery("#search_clear").click(function(){
+        // only user's actions trigger change => force it
+        jQuery("#search_text").val('').trigger('change');
+    });
 }(document));

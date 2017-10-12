@@ -32,7 +32,10 @@
           <div class="option">
             <span class="glyphicon glyphicon-search" aria-hidden="true" title="Поиск"></span>
           </div>
-          <input type="text" id="search_text" value="" placeholder="текст для поиска">
+          <div class="btn-group">
+            <input type="text" id="search_text" value="" placeholder="текст для поиска">
+            <span id="search_clear" class="glyphicon glyphicon-remove"></span>
+          </div>
         </div>
         <div class="form-group">
           <div class="option">
@@ -84,7 +87,11 @@
           <div class="option">
             <input type="checkbox" id="likes_filter">
           </div>
-          <label class="label label_option" for="likes_filter" title="Cкрывать посты, у которых лайков меньше указанного количества">Фильтр лайков &gt;=</label>
+          <label class="label label_option" for="likes_filter" title="Cкрывать посты, у которых лайков меньше указанного количества">Фильтр лайков</label>
+          <select id="likes_filter_op">
+            <option value="lt">&lt;</option>
+            <option value="gt">&gt;</option>
+          </select>
           <input type="number" id="min_likes" min="0" step="10" title="Cкрывать посты, у которых лайков меньше указанного количества">
         </div>
         <div class="form-group">

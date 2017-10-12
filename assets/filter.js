@@ -12,6 +12,7 @@
             ,"search_text":     ''
             ,"hide_re":         []
             ,"likes_filter":    false
+            ,"likes_filter_op": 'lt'
             ,"min_likes":       0
             ,"debug_mode":      false
         }
@@ -196,14 +197,24 @@
             debug('post friends');
             return POST_FRIENDS;
         }
+        ,filtered_by_likes = function(config, n_likes) {
+            if(!config.likes_filter)
+                return null;
+
+            if('lt' == config.likes_filter_op) {
+                return n_likes < config.min_likes;
+            }
+            return n_likes > config.min_likes;
+        }
         ,is_post_hidden = function(idx, el, type, n_likes) {
 			// hide posts which have likes less then config.filter_likes
 			// no matter on news feed or group page
 			// config.likes_filter - is a boolean variable,
 			// that enable or disable filtering by likes count
-			if(config.likes_filter && config.min_likes > n_likes) {
-				return true;
-			}
+            var filtered = filtered_by_likes(config, n_likes);
+            if(null != filtered && filtered) {
+                return true;
+            }
 
             if(null === type || undefined === type)
                 type = post_type(idx, el);
@@ -267,13 +278,12 @@
 
             var filter  = false;
             filter = config.filter_switch;
+            // number of selectors => to be more flexible
+            var sels_posts = [ 'div.post' ];
+            if(window.location.href.match("/feed")) {
+                sels_posts = [ 'div.feed_row' ];
+            }
             if(filter) {
-                // number of selectors => to be more flexible
-                var sels_posts = [ 'div.post' ];
-                if(window.location.href.match("/feed")) {
-                    sels_posts = [ 'div.feed_row' ];
-                }
-
                 for(var i=0; i<sels_posts.length; i++) {
                     var sel_posts  = sels_posts[i];
                     /* go through all elements and show/hide (can be on options change) */
@@ -330,6 +340,19 @@
                         debug("show left adv block: ", el_ads_left);
                         el_ads_left.show();
                     }
+                }
+            }
+            else {
+                // show all if we switched off
+                // to show again posts hidden by us
+                for(var i=0; i<sels_posts.length; i++) {
+                    var sel_posts  = sels_posts[i];
+                    jQuery(sel_posts).each(function(idx, el) {
+                        var el_jq   = jQuery(el);
+                        if(el_jq.is(':hidden')) {
+                            el_jq.show();
+                        }
+                    });
                 }
             }
 
