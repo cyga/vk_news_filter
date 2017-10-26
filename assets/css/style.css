@@ -17,6 +17,8 @@ a {
     text-shadow: 0px 0px 1px rgba(0,0,0,0.7);
 }
 
+
+
 h1 {
     font-size: 20px;
     line-height: 20px;
@@ -35,6 +37,12 @@ hr {
   opacity: 0.4;
 }
 
+#search_text {
+    margin-left: 7px;
+    padding-left: 6px;
+    padding-right: 18px;
+}
+
 .label_option:hover {
     transform: scale(1.1);
 }
@@ -43,7 +51,8 @@ hr {
     text-align: center;
 }
 
-.options_header input {
+.main_switch_container {
+/*.options_header input {*/
     margin-top: 15px;
 }
 
@@ -103,6 +112,15 @@ select {
 input {
     border-radius: 5px;
     border: 2px solid transparent;
+    box-shadow: inset 0px 2px 6px -2px rgba(0,0,0,0.7);
+}
+
+#likes_filter_op {
+    margin: 0 5px;
+    border-radius: 5px;
+    box-shadow: inset 0px 2px 6px -2px rgba(0,0,0,0.7);
+    border: 2px solid white;
+    height: 26px;
 }
 
 #min_likes {
