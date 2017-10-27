@@ -313,7 +313,7 @@
                             &&
                             !window.location.href.match("section=notifications")
                         ) {
-                            if(el_jq.is(':visible') && !is_on_screen(el_jq)) {
+                            if(el_jq.is(':visible') /*&& !is_on_screen(el_jq)*/) {
                                 debug("hide element: ", el_jq);
                                 el_jq.hide();
                             }

@@ -23,8 +23,12 @@
       <div class="options_header">
         <h1>Фильтр новостей vk.com</h1>
         <h2>v0.67</h2>
-        <input type="checkbox" id="filter_switch">
-        <label class="label" for="filter_switch">Включить</label>
+        <div class="main_switch_container">
+            <div class="option">
+                <input type="checkbox" id="filter_switch">
+            </div>
+            <label class="label label_option" for="filter_switch">Включить</label>
+        </div>
         <hr>
       </div>
       <form id="form_options" class="form-horizontal">
@@ -102,7 +106,7 @@
         </div>
       </form>
       <hr class="hr-bottom">
-      <div class="col-sm-12">
+      <div class="col-sm-12 status">
         <div class="label">
         </div>
         <div class="option" id="status" >

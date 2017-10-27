@@ -44,7 +44,7 @@ hr {
 }
 
 .label_option:hover {
-    transform: scale(1.1);
+    transform: scale(1.03);
 }
 
 .options_header {
@@ -128,6 +128,10 @@ input {
     color: black;
     position: relative;
     text-align: right;
+}
+
+.status {
+    text-align: center;
 }
 
 hr {
