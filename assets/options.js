@@ -101,7 +101,7 @@
     }
     function options_select() {
         return {
-             "likes_filter_op": 'ge'
+             "likes_filter_op": 'gt'
         };
     }
     function options_text_groups() {

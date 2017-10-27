@@ -12,7 +12,7 @@
             ,"search_text":     ''
             ,"hide_re":         []
             ,"likes_filter":    false
-            ,"likes_filter_op": 'lt'
+            ,"likes_filter_op": 'gt'
             ,"min_likes":       0
             ,"debug_mode":      false
         }
@@ -201,10 +201,10 @@
             if(!config.likes_filter)
                 return null;
 
-            if('lt' == config.likes_filter_op) {
-                return n_likes < config.min_likes;
+            if('gt' == config.likes_filter_op) {
+                return !(n_likes > config.min_likes);
             }
-            return n_likes > config.min_likes;
+            return !(n_likes < config.min_likes);
         }
         ,is_post_hidden = function(idx, el, type, n_likes) {
 			// hide posts which have likes less then config.filter_likes
