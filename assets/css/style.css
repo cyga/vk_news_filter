@@ -91,6 +91,7 @@ select {
     display: inline-block;
     font-size: 100%;
     padding-right: 0;
+    cursor: pointer;
 }
 
 .disabled {
