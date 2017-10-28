@@ -109,6 +109,7 @@ select {
 .form-horizontal {
     width: 650px;
     margin-top: 20px;
+    padding-left: 28px;
 }
 
 input {

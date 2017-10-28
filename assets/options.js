@@ -53,7 +53,7 @@
         var label = jQuery('#form_options').find('label');
         var select = jQuery('#likes_filter_op');
         var input = jQuery('input');
-        var glyphicon = jQuery('.glyphicon');        
+        var glyphicon = jQuery('.glyphicon');
 
         // console.log(label);
         var elements = [label, select, input, glyphicon];
@@ -62,6 +62,7 @@
 
         if(el_switch.is(':checked')) {
             checkbox.prop('disabled', false);
+            select.prop('disabled', false);
 
             $.each(elements, function(key, value) {
                 value.removeClass('disabled');
@@ -69,6 +70,7 @@
 
         } else {
             checkbox.prop('disabled', true);
+            select.prop('disabled', true);
 
             $.each(elements, function(key, value) {
                 value.addClass('disabled');
