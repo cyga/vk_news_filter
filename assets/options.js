@@ -51,13 +51,28 @@
         var el_switch = jQuery('#filter_switch');
         var checkbox = jQuery('#form_options').find('input');
         var label = jQuery('#form_options').find('label');
+        var select = jQuery('#likes_filter_op');
+        var input = jQuery('input');
+
+        // console.log(label);
+        var elements = [label, select, input];
+
+        // console.log(elements);
 
         if(el_switch.is(':checked')) {
             checkbox.prop('disabled', false);
-            label.removeClass('disabled');
+
+            $.each(elements, function(key, value) {
+                value.removeClass('disabled');
+            });
+
         } else {
             checkbox.prop('disabled', true);
-            label.addClass('disabled');
+
+            $.each(elements, function(key, value) {
+                value.addClass('disabled');
+            });
+
         }
     }
     jQuery('#filter_switch').on('click', function() {

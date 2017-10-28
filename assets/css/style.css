@@ -95,6 +95,7 @@ select {
 
 .disabled {
     opacity: 0.5;
+    transition: 0.05s;
 }
 
 .container {
@@ -113,6 +114,10 @@ input {
     border-radius: 5px;
     border: 2px solid transparent;
     box-shadow: inset 0px 2px 6px -2px rgba(0,0,0,0.7);
+}
+
+input::-webkit-inner-spin-button {
+    opacity: 1;
 }
 
 #likes_filter_op {
@@ -139,8 +144,9 @@ hr {
 }
 
 #search_text {
-    width: 200px;
+    width: 220px;
 }
+
 #search_clear {
     text-shadow: 0 0;
     position: absolute;
@@ -152,4 +158,12 @@ hr {
     font-size: 14px;
     cursor: pointer;
     color: #ccc;
+    text-shadow: 1px 1px 2px rgba(96, 74, 136, 1);
+    transition: 0.1s;
+}
+
+#search_clear:hover {
+    transition: 0.1s;
+    transform: scale(1.2);
+    text-shadow: 1px 1px 3px rgba(96, 74, 136, 1);
 }
