@@ -53,9 +53,10 @@
         var label = jQuery('#form_options').find('label');
         var select = jQuery('#likes_filter_op');
         var input = jQuery('input');
+        var glyphicon = jQuery('.glyphicon');        
 
         // console.log(label);
-        var elements = [label, select, input];
+        var elements = [label, select, input, glyphicon];
 
         // console.log(elements);
 
