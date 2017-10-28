@@ -92,11 +92,12 @@ select {
     font-size: 100%;
     padding-right: 0;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 .disabled {
     opacity: 0.5;
-    transition: 0.05s;
+    transition: 0.3s;
 }
 
 .container {
